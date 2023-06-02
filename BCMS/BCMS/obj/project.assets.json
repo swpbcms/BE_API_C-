@@ -2179,19 +2179,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ACER\\.nuget\\packages\\": {}
+    "C:\\Users\\nghia\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\SWP\\BE_API_C-\\BCMS\\BCMS\\BCMS.csproj",
+      "projectUniqueName": "C:\\Users\\nghia\\Source\\Repos\\BE_API_C-\\BCMS\\BCMS\\BCMS.csproj",
       "projectName": "BCMS",
-      "projectPath": "D:\\SWP\\BE_API_C-\\BCMS\\BCMS\\BCMS.csproj",
-      "packagesPath": "C:\\Users\\ACER\\.nuget\\packages\\",
-      "outputPath": "D:\\SWP\\BE_API_C-\\BCMS\\BCMS\\obj\\",
+      "projectPath": "C:\\Users\\nghia\\Source\\Repos\\BE_API_C-\\BCMS\\BCMS\\BCMS.csproj",
+      "packagesPath": "C:\\Users\\nghia\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\nghia\\Source\\Repos\\BE_API_C-\\BCMS\\BCMS\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\ACER\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\nghia\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -2199,6 +2199,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\sdk\\7.0.302\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -2261,7 +2262,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.103\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
       }
     }
   }

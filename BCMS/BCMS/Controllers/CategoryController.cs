@@ -34,11 +34,21 @@ namespace BCMS.Controllers
             }
         }
 
-        // GET api/<CategoryController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [Route("name-Category")]
+        [HttpGet]
+        public async Task<IActionResult> GetName(string name)
         {
-            return "value";
+            ResponseAPI<List<Category>> responseAPI = new ResponseAPI<List<Category>>();
+            try
+            {
+                responseAPI.Data = await this.service.GetByName(name);
+                return Ok(responseAPI);
+            }
+            catch (Exception ex)
+            {
+                responseAPI.Message = ex.Message;
+                return BadRequest(responseAPI);
+            }
         }
 
         [Route("Insert-Category")]

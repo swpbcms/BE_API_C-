@@ -22,9 +22,21 @@ namespace BCMS.Services
             throw new NotImplementedException();
         }
 
-        public Task<Category> GetByName(string name)
+        public async Task<Category> GetByName(string name)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var category = await this._context.Category.Where(x=>x.CategoryName.Contains(name)).FirstOrDefaultAsync();
+                if (category == null)
+                {
+                    return null;
+                }
+                return category;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public async Task<List<Category>> GetList()
