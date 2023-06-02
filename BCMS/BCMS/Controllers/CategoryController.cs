@@ -36,12 +36,12 @@ namespace BCMS.Controllers
 
         [Route("name-Category")]
         [HttpGet]
-        public async Task<IActionResult> GetName(string name)
+        public async Task<IActionResult> GetName(string namea)
         {
             ResponseAPI<List<Category>> responseAPI = new ResponseAPI<List<Category>>();
             try
             {
-                responseAPI.Data = await this.service.GetByName(name);
+                responseAPI.Data = await this.service.GetByName(namea);
                 return Ok(responseAPI);
             }
             catch (Exception ex)
