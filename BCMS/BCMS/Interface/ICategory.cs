@@ -1,4 +1,4 @@
-﻿using BCMS.DTO;
+﻿using BCMS.DTO.Category;
 using BCMS.Models;
 
 namespace BCMS.Interface
@@ -9,7 +9,6 @@ namespace BCMS.Interface
         Task<Category> GetById(string id);
         Task<Category> GetByName(string name);
         Task<Category> Insert(CategoryDTO newCategory);
-        Task<Category> Update(CategoryDTO updateCategory);
-        Task<Category> DeleteById(string id);
+        Task<Category> Update(updateCategoryDTO updateCategory);
     }
 }
