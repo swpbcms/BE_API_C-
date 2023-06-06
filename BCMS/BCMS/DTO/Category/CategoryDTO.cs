@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BCMS.DTO
+namespace BCMS.DTO.Category
 {
     public class CategoryDTO
     {

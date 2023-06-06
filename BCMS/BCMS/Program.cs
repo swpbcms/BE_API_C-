@@ -13,6 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ICategory,CategoryService>();
+builder.Services.AddScoped<IMember, MemberService>();
 builder.Services.AddScoped(typeof(BCMSContext));
 
 var app = builder.Build();
