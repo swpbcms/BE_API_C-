@@ -1,28 +1,28 @@
 ﻿using BCMS.DTO;
 using BCMS.DTO.Category;
+using BCMS.DTO.Member;
 using BCMS.Interface;
 using BCMS.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace BCMS.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoryController : ControllerBase
+    public class MemberController : ControllerBase
     {
-        private ICategory service;
-        public CategoryController(ICategory service)
+        private IMember service;
+        public MemberController(IMember service)
         {
             this.service = service;
         }
 
-        [Route("All-Category")]
+        [Route("All-Member")]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            ResponseAPI<List<Category>> responseAPI = new ResponseAPI<List<Category>>();
+            ResponseAPI<List<Member>> responseAPI = new ResponseAPI<List<Member>>();
             try
             {
                 responseAPI.Data = await this.service.GetList();
@@ -34,12 +34,11 @@ namespace BCMS.Controllers
                 return BadRequest(responseAPI);
             }
         }
-
-        [Route("Name-Category")]
+        [Route("Name-Member")]
         [HttpGet]
         public async Task<IActionResult> GetName(string name)
         {
-            ResponseAPI<List<Category>> responseAPI = new ResponseAPI<List<Category>>();
+            ResponseAPI<List<Member>> responseAPI = new ResponseAPI<List<Member>>();
             try
             {
                 responseAPI.Data = await this.service.GetByName(name);
@@ -52,11 +51,11 @@ namespace BCMS.Controllers
             }
         }
 
-        [Route("ID-Category")]
+        [Route("ID-Member")]
         [HttpGet]
         public async Task<IActionResult> GetID(string id)
         {
-            ResponseAPI<List<Category>> responseAPI = new ResponseAPI<List<Category>>();
+            ResponseAPI<List<Member>> responseAPI = new ResponseAPI<List<Member>>();
             try
             {
                 responseAPI.Data = await this.service.GetById(id);
@@ -69,14 +68,14 @@ namespace BCMS.Controllers
             }
         }
 
-        [Route("Insert-Category")]
+        [Route("login-Member")]
         [HttpPost]
-        public async Task<IActionResult> Insert(CategoryDTO dto)
+        public async Task<IActionResult> Login(MemberLoginDTO dto)
         {
-            ResponseAPI<List<Category>> responseAPI = new ResponseAPI<List<Category>>();
+            ResponseAPI<Member> responseAPI = new ResponseAPI<Member>();
             try
             {
-                responseAPI.Data = await this.service.Insert(dto);
+                responseAPI.Data = await this.service.Login(dto);
                 return Ok(responseAPI);
             }
             catch (Exception ex)
@@ -86,11 +85,28 @@ namespace BCMS.Controllers
             }
         }
 
-        [Route("Update-Category")]
-        [HttpPut]
-        public async Task<IActionResult> update(updateCategoryDTO dto)
+        [Route("Register-Member")]
+        [HttpPost]
+        public async Task<IActionResult> Insert(MemberRegisterDTO dto)
         {
-            ResponseAPI<List<Category>> responseAPI = new ResponseAPI<List<Category>>();
+            ResponseAPI<List<Member>> responseAPI = new ResponseAPI<List<Member>>();
+            try
+            {
+                responseAPI.Data = await this.service.Register(dto);
+                return Ok(responseAPI);
+            }
+            catch (Exception ex)
+            {
+                responseAPI.Message = ex.Message;
+                return BadRequest(responseAPI);
+            }
+        }
+
+        [Route("Update-member")]
+        [HttpPut]
+        public async Task<IActionResult> update(updateMemberDTO dto)
+        {
+            ResponseAPI<List<Member>> responseAPI = new ResponseAPI<List<Member>>();
             try
             {
                 responseAPI.Data = await this.service.Update(dto);
@@ -103,6 +119,21 @@ namespace BCMS.Controllers
             }
         }
 
-
+        [Route("Delete-member")]
+        [HttpDelete]
+        public async Task<IActionResult> Delete(string id)
+        {
+            ResponseAPI<List<Member>> responseAPI = new ResponseAPI<List<Member>>();
+            try
+            {
+                responseAPI.Data = await this.service.DeleteByID(id);
+                return Ok(responseAPI);
+            }
+            catch (Exception ex)
+            {
+                responseAPI.Message = ex.Message;
+                return BadRequest(responseAPI);
+            }
+        }
     }
 }

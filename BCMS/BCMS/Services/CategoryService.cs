@@ -1,7 +1,8 @@
-﻿using BCMS.DTO;
+﻿using BCMS.DTO.Category;
 using BCMS.Interface;
 using BCMS.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Xml.Linq;
 
 namespace BCMS.Services
 {
@@ -12,14 +13,22 @@ namespace BCMS.Services
         {
             _context = context;
         }
-        public Task<Category> DeleteById(string id)
-        {
-            throw new NotImplementedException();
-        }
 
-        public Task<Category> GetById(string id)
+        public async Task<Category> GetById(string id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var category = await this._context.Category.Where(x => x.CategoryId.Equals(id)).FirstOrDefaultAsync();
+                if (category == null)
+                {
+                    return null;
+                }
+                return category;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public async Task<Category> GetByName(string name)
@@ -72,9 +81,26 @@ namespace BCMS.Services
             }
         }
 
-        public Task<Category> Update(CategoryDTO updateCategory)
+        public async Task<Category> Update(updateCategoryDTO updateCategory)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var cate = await this._context.Category.Where(x=>x.CategoryId.Equals(updateCategory.CategoryId)).FirstOrDefaultAsync();
+                if(cate == null)
+                {
+                    throw new Exception("invalid category id");
+                }
+                cate.CategoryName = updateCategory.CategoryName;
+                cate.Description = updateCategory.Description;
+                this._context.Category.Update(cate);
+                await this._context.SaveChangesAsync();
+
+                return cate;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }
