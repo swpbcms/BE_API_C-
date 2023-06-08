@@ -64,7 +64,7 @@ namespace BCMS.Services
             }
         }
 
-        public async Task<Member> GetByName(string name)
+        public async Task<List<Member>> GetByName(string name)
         {
             try
             {
@@ -80,7 +80,7 @@ namespace BCMS.Services
                         MemberImage = x.MemberImage,
                         MemberStatus = x.MemberStatus
                     })
-                    .FirstOrDefaultAsync();
+                    .ToListAsync();
                 if (mem != null)
                 {
                     return mem;
