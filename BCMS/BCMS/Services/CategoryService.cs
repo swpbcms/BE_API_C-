@@ -31,11 +31,11 @@ namespace BCMS.Services
             }
         }
 
-        public async Task<Category> GetByName(string name)
+        public async Task<List<Category>> GetByName(string name)
         {
             try
             {
-                var category = await this._context.Category.Where(x=>x.CategoryName.Contains(name)).FirstOrDefaultAsync();
+                var category = await this._context.Category.Where(x=>x.CategoryName.Contains(name)).ToListAsync();
                 if (category == null)
                 {
                     return null;
@@ -92,7 +92,7 @@ namespace BCMS.Services
                 }
                 cate.CategoryName = updateCategory.CategoryName;
                 cate.Description = updateCategory.Description;
-                this._context.Category.Update(cate);
+                //this._context.Category.Update(cate);
                 await this._context.SaveChangesAsync();
 
                 return cate;
