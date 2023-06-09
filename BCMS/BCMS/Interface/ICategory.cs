@@ -7,7 +7,7 @@ namespace BCMS.Interface
     {
         Task<List<Category>> GetList();
         Task<Category> GetById(string id);
-        Task<Category> GetByName(string name);
+        Task<List<Category>> GetByName(string name);
         Task<Category> Insert(CategoryDTO newCategory);
         Task<Category> Update(updateCategoryDTO updateCategory);
     }
