@@ -51,7 +51,7 @@ namespace BCMS.Controllers
             }
         }
 
-        [Route("ID-Member")]
+        [Route("ID-Manager")]
         [HttpGet]
         public async Task<IActionResult> GetID(string id)
         {
@@ -68,7 +68,7 @@ namespace BCMS.Controllers
             }
         }
 
-        [Route("login-Member")]
+        [Route("login-Manager")]
         [HttpPost]
         public async Task<IActionResult> Login(ManagerLoginDTO dto)
         {
@@ -85,7 +85,7 @@ namespace BCMS.Controllers
             }
         }
 
-        [Route("Register-Member")]
+        [Route("Register-Manager")]
         [HttpPost]
         public async Task<IActionResult> Insert(ManagerCreateDTO dto)
         {
@@ -102,7 +102,7 @@ namespace BCMS.Controllers
             }
         }
 
-        [Route("Update-member")]
+        [Route("Update-Manager")]
         [HttpPut]
         public async Task<IActionResult> update(ManagerUpdateDTO dto)
         {
@@ -119,7 +119,7 @@ namespace BCMS.Controllers
             }
         }
 
-        [Route("Delete-member")]
+        [Route("Delete-Manager")]
         [HttpDelete]
         public async Task<IActionResult> Delete(string id)
         {

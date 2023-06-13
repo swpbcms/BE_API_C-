@@ -22,6 +22,7 @@ namespace BCMS.Services
                 cmt.CommentContent = comment.CommentContent;
                 cmt.CommentId = "CMT"+Guid.NewGuid().ToString().Substring(0,7);
                 cmt.DateTime = DateTime.Now;
+                cmt.MemberId= comment.MemberId;
 
                 await this._context.Comment.AddAsync(cmt);
                 await this._context.SaveChangesAsync();
@@ -92,6 +93,7 @@ namespace BCMS.Services
                 rep.CommentId = "CMT" + Guid.NewGuid().ToString().Substring(0, 7);
                 rep.DateTime = DateTime.Now;
                 rep.ReplyId = reply.CommentIDReply;
+                rep.MemberId = reply.MemberId;
 
                 await this._context.Comment.AddAsync(rep);
                 await this._context.SaveChangesAsync();

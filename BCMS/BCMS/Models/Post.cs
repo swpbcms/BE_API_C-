@@ -45,7 +45,6 @@ namespace BCMS.Models
         [Column("MemberID")]
         [StringLength(10)]
         public string MemberId { get; set; }
-        [Required]
         [Column("ManagerID")]
         [StringLength(10)]
         public string ManagerId { get; set; }

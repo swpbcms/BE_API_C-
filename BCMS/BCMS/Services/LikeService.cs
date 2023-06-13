@@ -22,7 +22,8 @@ namespace BCMS.Services
                 if (await this._context.SaveChangesAsync() > 0)
                 {
                     var check = await this._context.Post.Where(x => x.PostId.Equals(like.PostId)).FirstOrDefaultAsync();
-                    check.PostNumberLike = check.PostNumberLike + -1;
+                    check.PostNumberLike = check.PostNumberLike -1;
+                    await this._context.SaveChangesAsync();
                     return true;
                 }
                 return false;
@@ -47,6 +48,7 @@ namespace BCMS.Services
                 {
                     var check = await this._context.Post.Where(x=>x.PostId.Equals(like.PostId)).FirstOrDefaultAsync();
                     check.PostNumberLike = check.PostNumberLike+1;
+                    await this._context.SaveChangesAsync();
                     return true;
                 }return false;
             }catch(Exception ex)
