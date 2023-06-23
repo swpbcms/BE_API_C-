@@ -1,4 +1,5 @@
 ﻿using BCMS.DTO;
+using BCMS.DTO.Category;
 using BCMS.Interface;
 using BCMS.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -34,14 +35,31 @@ namespace BCMS.Controllers
             }
         }
 
-        [Route("name-Category")]
+        [Route("Name-Category")]
         [HttpGet]
-        public async Task<IActionResult> GetName(string namea)
+        public async Task<IActionResult> GetName(string name)
         {
             ResponseAPI<List<Category>> responseAPI = new ResponseAPI<List<Category>>();
             try
             {
-                responseAPI.Data = await this.service.GetByName(namea);
+                responseAPI.Data = await this.service.GetByName(name);
+                return Ok(responseAPI);
+            }
+            catch (Exception ex)
+            {
+                responseAPI.Message = ex.Message;
+                return BadRequest(responseAPI);
+            }
+        }
+
+        [Route("ID-Category")]
+        [HttpGet]
+        public async Task<IActionResult> GetID(string id)
+        {
+            ResponseAPI<List<Category>> responseAPI = new ResponseAPI<List<Category>>();
+            try
+            {
+                responseAPI.Data = await this.service.GetById(id);
                 return Ok(responseAPI);
             }
             catch (Exception ex)
@@ -68,16 +86,23 @@ namespace BCMS.Controllers
             }
         }
 
-        // PUT api/<CategoryController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [Route("Update-Category")]
+        [HttpPut]
+        public async Task<IActionResult> update(updateCategoryDTO dto)
         {
+            ResponseAPI<List<Category>> responseAPI = new ResponseAPI<List<Category>>();
+            try
+            {
+                responseAPI.Data = await this.service.Update(dto);
+                return Ok(responseAPI);
+            }
+            catch (Exception ex)
+            {
+                responseAPI.Message = ex.Message;
+                return BadRequest(responseAPI);
+            }
         }
 
-        // DELETE api/<CategoryController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+
     }
 }
