@@ -68,7 +68,7 @@ namespace BCMS.Controllers
             }
         }
 
-        [Route("create-process")]
+        [Route("update-process")]
         [HttpPut]
         public async Task<IActionResult> update(ProcessEventDTO dto)
         {

@@ -52,6 +52,40 @@ namespace BCMS.Controllers
             }
         }
 
+        [Route("get-join-post")]
+        [HttpGet]
+        public async Task<IActionResult> getjoin(string id)
+        {
+            ResponseAPI<List<JoinEvent>> responseAPI = new ResponseAPI<List<JoinEvent>>();
+            try
+            {
+                responseAPI.Data = await this.service.getJoinMember(id);
+                return Ok(responseAPI);
+            }
+            catch (Exception ex)
+            {
+                responseAPI.Message = ex.Message;
+                return BadRequest(responseAPI);
+            }
+        }
+
+        [Route("get-like-post")]
+        [HttpGet]
+        public async Task<IActionResult> getLike(string id)
+        {
+            ResponseAPI<List<Like>> responseAPI = new ResponseAPI<List<Like>>();
+            try
+            {
+                responseAPI.Data = await this.service.getLikeMember(id);
+                return Ok(responseAPI);
+            }
+            catch (Exception ex)
+            {
+                responseAPI.Message = ex.Message;
+                return BadRequest(responseAPI);
+            }
+        }
+
         [Route("get-postuser")]
         [HttpGet]
         public async Task<IActionResult> getPost()

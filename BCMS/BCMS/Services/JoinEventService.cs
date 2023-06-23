@@ -76,6 +76,10 @@ namespace BCMS.Services
                 {
                     check.Status = true;
                     check.IsFollow = true;
+
+                    var post = await this._context.Post.Where(x => x.PostId.Equals(join.PostId)).FirstOrDefaultAsync();
+                    post.PostNumberJoin += 1;
+
                     await this._context.SaveChangesAsync();
                     return true;
                 }
@@ -86,6 +90,7 @@ namespace BCMS.Services
                     joinEV.MemberId = join.MemberId;
                     joinEV.Status = true;
                     joinEV.IsFollow = true;
+                    joinEV.DateTime = DateTime.Now;
 
                     await this._context.JoinEvent.AddAsync(joinEV);
                     await this._context.SaveChangesAsync();

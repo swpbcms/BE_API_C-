@@ -1,4 +1,5 @@
-﻿using BCMS.DTO.Post;
+﻿using BCMS.DTO.Interact;
+using BCMS.DTO.Post;
 using BCMS.Interface;
 using BCMS.Models;
 using Microsoft.EntityFrameworkCore;
@@ -78,11 +79,75 @@ namespace BCMS.Services
             }
         }
 
+        public async Task<List<JoinEvent>> getJoinMember(string id)
+        {
+            try
+            {
+                var check = await this._context.JoinEvent.Where(x=>x.PostId.Equals(id)).ToListAsync();
+                if(check != null)
+                {
+                    return check;
+                }
+                else
+                {
+                    return null;
+                }
+            }catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<List<Like>> getLikeMember(string id)
+        {
+            try
+            {
+                var check = await this._context.Like.Where(x => x.PostId.Equals(id)).ToListAsync();
+                if (check != null)
+                {
+                    return check;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<List<Post>> GetPost()
         {
             try
             {
-                var check = await this._context.Post.ToListAsync();
+                var check = await this._context.Post
+                    //.Select(x=> new Post
+                    //{
+                    //    ManagerId= x.ManagerId,
+                    //    PostId= x.PostId,
+                    //    MemberId= x.MemberId,
+                    //    PostTitle= x.PostTitle,
+                    //    PostDescription= x.PostDescription,
+                    //    PostIsEvent= x.PostIsEvent,
+                    //    EventStartDate= x.EventStartDate,
+                    //    EventEndDate= x.EventEndDate,
+                    //    EventLocation= x.EventLocation,
+                    //    PostCreateAt= x.PostCreateAt,
+                    //    PostNumberJoin= x.PostNumberJoin,
+                    //    PostNumberLike  = x.PostNumberLike,
+                    //    PostStatus= x.PostStatus
+                    //})
+                    //.Include(x=>x.ManagerId)
+                    .Include(x=> x.Category)
+                    .Include(x=>x.Member)
+                    .Include(x=>x.Media)
+                    .Include(x=>x.JoinEvent)
+                    .Include(x=>x.Like)
+                    .Include(x=>x.Comment)
+                    .Include(x=>x.ProcessEvent)
+                    .ToListAsync();
                 if(check != null)
                 {
                     return check;
@@ -98,7 +163,15 @@ namespace BCMS.Services
         {
             try
             {
-                var check = await this._context.Post.Where(x=>x.PostStatus.Equals("Thành công")).ToListAsync();
+                var check = await this._context.Post
+                    .Include(x => x.Category)
+                    .Include(x => x.Member)
+                    .Include(x => x.Media)
+                    .Include(x => x.JoinEvent)
+                    .Include(x => x.Like)
+                    .Include(x => x.Comment)
+                    .Include(x => x.ProcessEvent)
+                    .Where(x=>x.PostStatus.Equals("Thành công")).ToListAsync();
                 if (check != null)
                 {
                     return check;

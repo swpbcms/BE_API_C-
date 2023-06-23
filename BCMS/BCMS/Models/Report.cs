@@ -17,7 +17,6 @@ namespace BCMS.Models
         [Required]
         [StringLength(50)]
         public string ReportTitle { get; set; }
-        [Required]
         [Column("ManagerID")]
         [StringLength(10)]
         public string ManagerId { get; set; }
