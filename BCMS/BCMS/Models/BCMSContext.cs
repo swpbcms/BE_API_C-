@@ -36,7 +36,7 @@ namespace BCMS.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=DESKTOP-QKQ1PQ7\\SQLEXPRESS;Initial Catalog=BCMS;User ID=sa;Password=sa");
+                optionsBuilder.UseSqlServer("Data Source=LAPTOP-8LC85HGU\\SQLEXPRESS;Initial Catalog=BCMS;Persist Security Info=True;User ID=sa;Password=12");
             }
         }
 
@@ -119,7 +119,6 @@ namespace BCMS.Models
                 entity.HasOne(d => d.Manager)
                     .WithMany(p => p.Post)
                     .HasForeignKey(d => d.ManagerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Post_Manager");
 
                 entity.HasOne(d => d.Member)
@@ -160,7 +159,6 @@ namespace BCMS.Models
                 entity.HasOne(d => d.Manager)
                     .WithMany(p => p.Report)
                     .HasForeignKey(d => d.ManagerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Report_Manager");
 
                 entity.HasOne(d => d.Member)
