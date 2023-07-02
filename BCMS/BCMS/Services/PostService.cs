@@ -146,6 +146,7 @@ namespace BCMS.Services
                     .Include(x=>x.JoinEvent)
                     .Include(x=>x.Like)
                     .Include(x=>x.Comment)
+                        .ThenInclude(u=>u.Member)
                     .Include(x=>x.ProcessEvent)
                     .ToListAsync();
                 if(check != null)
@@ -170,6 +171,7 @@ namespace BCMS.Services
                     .Include(x => x.JoinEvent)
                     .Include(x => x.Like)
                     .Include(x => x.Comment)
+                        .ThenInclude (u=>u.Member)
                     .Include(x => x.ProcessEvent)
                     .Where(x=>x.PostStatus.Equals("Thành công")).ToListAsync();
                 if (check != null)
