@@ -60,9 +60,28 @@ namespace BCMS.Services
         {
             try
             {
-                var db = await this._context.Comment.ToListAsync();
+                var db = await this._context.Comment
+                    .Include(x=>x.Member)
+                    .Include(x=>x.PostId)
+                    .ToListAsync();
                 return db;
             }catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<List<Comment>> GetCommentPost(string postid)
+        {
+            try
+            {
+                var db = await this._context.Comment.Where(x => x.Status ||x.PostId.Equals(postid))
+                    .Include(x => x.Member)
+                    .Include(x => x.PostId)
+                    .ToListAsync();
+                return db;
+            }
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
@@ -72,7 +91,10 @@ namespace BCMS.Services
         {
             try
             {
-                var db = await this._context.Comment.Where(x=>x.Status).ToListAsync();
+                var db = await this._context.Comment.Where(x=>x.Status)
+                    .Include(x => x.Member)
+                    .Include(x => x.PostId)
+                    .ToListAsync();
                 return db;
             }
             catch (Exception ex)

@@ -85,6 +85,23 @@ namespace BCMS.Controllers
             }
         }
 
+        [Route("get-comment-post")]
+        [HttpGet]
+        public async Task<IActionResult> getCommentPost(string postid)
+        {
+            ResponseAPI<List<Comment>> responseAPI = new ResponseAPI<List<Comment>>();
+            try
+            {
+                responseAPI.Data = await this.service.GetCommentPost(postid);
+                return Ok(responseAPI);
+            }
+            catch (Exception ex)
+            {
+                responseAPI.Message = ex.Message;
+                return BadRequest(responseAPI);
+            }
+        }
+
         [Route("update-comment")]
         [HttpPut]
         public async Task<IActionResult> updateComment(updateCommentDTO comment)
