@@ -168,12 +168,30 @@ namespace BCMS.Services
             try
             {
                 var mem = await this._context.Member.Where(x => x.MemberId.Equals(updateMem.MemberId)).FirstOrDefaultAsync();
-                mem.MemberPassword = updateMem.MemberPassword;
-                mem.MemberGender = updateMem.MemberGender;
-                mem.MemberDob = updateMem.MemberDob;
-                mem.MemberEmail = updateMem.MemberEmail;
-                mem.MemberImage = updateMem.MemberImage;
-                mem.MemberFullName = updateMem.MemberFullName;
+                if(updateMem.MemberPassword!= null)
+                {
+                    mem.MemberPassword = updateMem.MemberPassword;
+                }
+                if (updateMem.MemberGender != null)
+                {
+                    mem.MemberGender = (bool)updateMem.MemberGender;
+                }
+                if (updateMem.MemberDob != null)
+                {
+                    mem.MemberDob = (DateTime)updateMem.MemberDob;
+                }
+                if (updateMem.MemberEmail != null)
+                {
+                    mem.MemberEmail = updateMem.MemberEmail;
+                }
+                if (updateMem.MemberImage != null)
+                {
+                    mem.MemberImage = updateMem.MemberImage;
+                }
+                if (updateMem.MemberFullName != null)
+                {
+                    mem.MemberFullName = updateMem.MemberFullName;
+                }
 
                 this._context.Member.Update(mem);
                 await this._context.SaveChangesAsync();
