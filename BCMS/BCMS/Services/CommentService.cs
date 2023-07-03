@@ -62,7 +62,7 @@ namespace BCMS.Services
             {
                 var db = await this._context.Comment
                     .Include(x=>x.Member)
-                    .Include(x=>x.PostId)
+                    .Include(x=>x.Post)
                     .ToListAsync();
                 return db;
             }catch(Exception ex)
@@ -77,7 +77,7 @@ namespace BCMS.Services
             {
                 var db = await this._context.Comment.Where(x => x.Status ||x.PostId.Equals(postid))
                     .Include(x => x.Member)
-                    .Include(x => x.PostId)
+                    .Include(x => x.Post)
                     .ToListAsync();
                 return db;
             }
@@ -93,7 +93,7 @@ namespace BCMS.Services
             {
                 var db = await this._context.Comment.Where(x=>x.Status)
                     .Include(x => x.Member)
-                    .Include(x => x.PostId)
+                    .Include(x => x.Post)
                     .ToListAsync();
                 return db;
             }
