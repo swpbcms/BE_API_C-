@@ -53,6 +53,22 @@ namespace BCMS.Services
 
 
                 await this._context.Post.AddAsync(pst);
+                if (await this._context.SaveChangesAsync() > 0)
+                {
+                    foreach(var media in post.media)
+                    {
+                        var med = new Media();
+
+                        med.Status = true;
+                        med.PostId = pst.PostId;
+                        med.LinkMedia = media.LinkMedia;
+                        med.MediaId = "MED" + Guid.NewGuid().ToString().Substring(0, 7);
+
+                        await this._context.Media.AddAsync(med);
+                        await this._context.SaveChangesAsync();
+                        med = new Media();
+                    }
+                }
                 await this._context.SaveChangesAsync();
 
                 return pst;
@@ -143,8 +159,8 @@ namespace BCMS.Services
                     .Include(x=> x.Category)
                     .Include(x=>x.Member)
                     .Include(x=>x.Media)
-                    .Include(x=>x.JoinEvent)
-                    .Include(x=>x.Like)
+                    //.Include(x=>x.JoinEvent)
+                    //.Include(x=>x.Like)
                     .Include(x=>x.Comment)
                         .ThenInclude(u=>u.Member)
                     .Include(x=>x.ProcessEvent)
