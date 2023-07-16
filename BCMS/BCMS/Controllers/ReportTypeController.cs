@@ -69,7 +69,7 @@ namespace BCMS.Controllers
             }
         }
 
-        [Route("Insert-Category")]
+        [Route("Insert-Type")]
         [HttpPost]
         public async Task<IActionResult> Insert(CreateReportTypeDTO dto)
         {

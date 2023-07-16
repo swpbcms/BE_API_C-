@@ -86,7 +86,7 @@ namespace BCMS.Controllers
         }
 
         [Route("moderate-report")]
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> moderate(updateReportDTO dto)
         {
             ResponseAPI<List<Report>> responseAPI = new ResponseAPI<List<Report>>();
