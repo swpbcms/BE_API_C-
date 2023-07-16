@@ -95,6 +95,23 @@ namespace BCMS.Services
             }
         }
 
+        public async Task<Post> getPostID(string id)
+        {
+            try
+            {
+                var check = await this._context.Post.Where(x => x.PostId.Equals(id)).FirstOrDefaultAsync();
+                if (check != null)
+                {
+                    return check;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<List<JoinEvent>> getJoinMember(string id)
         {
             try

@@ -52,6 +52,23 @@ namespace BCMS.Controllers
             }
         }
 
+        [Route("get-post-id")]
+        [HttpGet]
+        public async Task<IActionResult> getid(string id)
+        {
+            ResponseAPI<List<Post>> responseAPI = new ResponseAPI<List<Post>>();
+            try
+            {
+                responseAPI.Data = await this.service.getPostID(id);
+                return Ok(responseAPI);
+            }
+            catch (Exception ex)
+            {
+                responseAPI.Message = ex.Message;
+                return BadRequest(responseAPI);
+            }
+        }
+
         [Route("get-join-post")]
         [HttpGet]
         public async Task<IActionResult> getjoin(string id)

@@ -11,6 +11,7 @@ namespace BCMS.Interface
         Task<Post> CreatePost(CreatePostDTO post);
         Task<Post> UpdatePost(updatePostDTO post);
         Task<Post> DeletePost(string id);
+        Task<Post> getPostID(string id);
         Task<List<Post>> searchPost(string search);
         Task<List<Post>> searchPostManager();
         Task<Post> moderate(string id, bool option,string managerID);
