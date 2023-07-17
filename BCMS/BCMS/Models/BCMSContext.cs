@@ -27,6 +27,7 @@ namespace BCMS.Models
         public virtual DbSet<Member> Member { get; set; }
         public virtual DbSet<Notification> Notification { get; set; }
         public virtual DbSet<Post> Post { get; set; }
+        public virtual DbSet<PostCategory> PostCategory { get; set; }
         public virtual DbSet<ProcessEvent> ProcessEvent { get; set; }
         public virtual DbSet<Report> Report { get; set; }
         public virtual DbSet<ReportType> ReportType { get; set; }
@@ -126,23 +127,23 @@ namespace BCMS.Models
                     .HasForeignKey(d => d.MemberId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Post_Member");
+            });
 
-                entity.HasMany(d => d.Category)
-                    .WithMany(p => p.Post)
-                    .UsingEntity<Dictionary<string, object>>(
-                        "PostCategory",
-                        l => l.HasOne<Category>().WithMany().HasForeignKey("CategoryId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_PostCategory_Category"),
-                        r => r.HasOne<Post>().WithMany().HasForeignKey("PostId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_PostCategory_Post"),
-                        j =>
-                        {
-                            j.HasKey("PostId", "CategoryId");
+            modelBuilder.Entity<PostCategory>(entity =>
+            {
+                entity.HasKey(e => new { e.PostId, e.CategoryId });
 
-                            j.ToTable("PostCategory");
+                entity.HasOne(d => d.Category)
+                    .WithMany(p => p.PostCategory)
+                    .HasForeignKey(d => d.CategoryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_PostCategory_Category");
 
-                            j.IndexerProperty<string>("PostId").HasMaxLength(10).HasColumnName("PostID");
-
-                            j.IndexerProperty<string>("CategoryId").HasMaxLength(10).HasColumnName("CategoryID");
-                        });
+                entity.HasOne(d => d.Post)
+                    .WithMany(p => p.PostCategory)
+                    .HasForeignKey(d => d.PostId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_PostCategory_Post");
             });
 
             modelBuilder.Entity<ProcessEvent>(entity =>

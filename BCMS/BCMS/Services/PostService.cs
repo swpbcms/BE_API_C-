@@ -40,21 +40,27 @@ namespace BCMS.Services
                     pst.PostIsEvent = false;
                     pst.PostStatus = "Thành công";
                 }
-
-                pst.Category = new List<Category>();
+                await this._context.Post.AddAsync(pst);
+                await this._context.SaveChangesAsync();
                 foreach (var x in post.categories)
                 {
                     var check = await this._context.Category.Where(c => c.CategoryId.Equals(x.CategoryID)).FirstOrDefaultAsync();
                     if(check != null)
                     {
-                        pst.Category.Add(check);
+                        var postCate = new PostCategory();
+
+                        postCate.PostId = pst.PostId;
+                        postCate.CategoryId = check.CategoryId;
+                        postCate.Status = true;
+
+                        await this._context.PostCategory.AddAsync(postCate);
+                        await this._context.SaveChangesAsync();
+
+                        postCate = new PostCategory();
                     }
                 }
 
 
-                await this._context.Post.AddAsync(pst);
-                if (await this._context.SaveChangesAsync() > 0)
-                {
                     foreach(var media in post.media)
                     {
                         var med = new Media();
@@ -68,7 +74,7 @@ namespace BCMS.Services
                         await this._context.SaveChangesAsync();
                         med = new Media();
                     }
-                }
+                
                 await this._context.SaveChangesAsync();
 
                 return pst;
@@ -173,13 +179,16 @@ namespace BCMS.Services
                     //    PostStatus= x.PostStatus
                     //})
                     //.Include(x=>x.ManagerId)
-                    .Include(x=> x.Category)
+                    .Include(x=> x.PostCategory).ThenInclude(x=>x.Category)
                     .Include(x=>x.Member)
                     .Include(x=>x.Media)
-                    //.Include(x=>x.JoinEvent)
-                    //.Include(x=>x.Like)
+                    .Include(x=>x.JoinEvent)
+                    .Include(x=>x.Like)
                     .Include(x=>x.Comment)
                         .ThenInclude(u=>u.Member)
+                    .Include(x => x.Comment)
+                        .ThenInclude(x=>x.InverseReply)
+                        .ThenInclude(u => u.Member)
                     .Include(x=>x.ProcessEvent)
                     .ToListAsync();
                 if(check != null)
@@ -198,13 +207,17 @@ namespace BCMS.Services
             try
             {
                 var check = await this._context.Post
-                    .Include(x => x.Category)
+                    //.Include(x => x.ManagerId)
+                    .Include(x => x.PostCategory).ThenInclude(x => x.Category)
                     .Include(x => x.Member)
                     .Include(x => x.Media)
-                    //.Include(x => x.JoinEvent)
-                    //.Include(x => x.Like)
+                    .Include(x => x.JoinEvent)
+                    .Include(x => x.Like)
                     .Include(x => x.Comment)
-                        .ThenInclude (u=>u.Member)
+                        .ThenInclude(u => u.Member)
+                    .Include(x => x.Comment)
+                        .ThenInclude(x => x.InverseReply)
+                        .ThenInclude(u => u.Member)
                     .Include(x => x.ProcessEvent)
                     .Where(x=>x.PostStatus.Equals("Thành công")).ToListAsync();
                 if (check != null)

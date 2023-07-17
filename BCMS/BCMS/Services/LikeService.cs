@@ -46,8 +46,22 @@ namespace BCMS.Services
                 await this._context.Like.AddAsync(db);
                 if(await this._context.SaveChangesAsync() >0)
                 {
-                    var check = await this._context.Post.Where(x=>x.PostId.Equals(like.PostId)).FirstOrDefaultAsync();
+                    var check = await this._context.Post.Where(x=>x.PostId.Equals(like.PostId)).Include(x=>x.Member).FirstOrDefaultAsync();
                     check.PostNumberLike = check.PostNumberLike+1;
+
+                    await this._context.SaveChangesAsync();
+
+                    var mem = await this._context.Member.Where(x => x.MemberId.Equals(like.MemberId)).FirstOrDefaultAsync();
+                    var noti = new Notification();
+
+                    noti.NotificationId = "NOTI" + Guid.NewGuid().ToString().Substring(0, 6);
+                    noti.MemberId = check.MemberId;
+                    noti.NotificationDateTime = DateTime.Now;
+                    noti.NotificationTitle = "Reply comment";
+                    noti.NotificationContent = mem.MemberFullName + " đã thích bài viết của bạn";
+                    noti.NotificationStatus = true;
+
+                    await this._context.Notification.AddAsync(noti);
                     await this._context.SaveChangesAsync();
                     return true;
                 }return false;

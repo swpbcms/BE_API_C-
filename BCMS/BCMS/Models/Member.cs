@@ -29,7 +29,6 @@ namespace BCMS.Models
         [Column(TypeName = "datetime")]
         public DateTime MemberCreateAt { get; set; }
         public bool MemberGender { get; set; }
-        [Required]
         public string MemberImage { get; set; }
         [Required]
         [StringLength(100)]
@@ -38,7 +37,7 @@ namespace BCMS.Models
         [StringLength(100)]
         public string MemberEmail { get; set; }
         [Column("MemberDOB", TypeName = "date")]
-        public DateTime MemberDob { get; set; }
+        public DateTime? MemberDob { get; set; }
         public bool MemberStatus { get; set; }
         [Required]
         [StringLength(50)]

@@ -16,8 +16,8 @@ namespace BCMS.Models
             JoinEvent = new HashSet<JoinEvent>();
             Like = new HashSet<Like>();
             Media = new HashSet<Media>();
+            PostCategory = new HashSet<PostCategory>();
             ProcessEvent = new HashSet<ProcessEvent>();
-            Category = new HashSet<Category>();
         }
 
         [Key]
@@ -64,10 +64,8 @@ namespace BCMS.Models
         [InverseProperty("Post")]
         public virtual ICollection<Media> Media { get; set; }
         [InverseProperty("Post")]
-        public virtual ICollection<ProcessEvent> ProcessEvent { get; set; }
-
-        [ForeignKey("PostId")]
+        public virtual ICollection<PostCategory> PostCategory { get; set; }
         [InverseProperty("Post")]
-        public virtual ICollection<Category> Category { get; set; }
+        public virtual ICollection<ProcessEvent> ProcessEvent { get; set; }
     }
 }
