@@ -29,7 +29,6 @@ namespace BCMS.Models
         public string ReportType { get; set; }
         public bool ReportStatus { get; set; }
         [Required]
-        [StringLength(10)]
         public string ReportDescription { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime DateTime { get; set; }

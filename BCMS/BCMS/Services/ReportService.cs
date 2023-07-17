@@ -29,6 +29,18 @@ namespace BCMS.Services
                 await this._context.AddAsync(report);
                 await this._context.SaveChangesAsync();
 
+                var noti = new Notification();
+
+                noti.NotificationId = "NOTI" + Guid.NewGuid().ToString().Substring(0, 6);
+                noti.MemberId = dto.MemberId;
+                noti.NotificationDateTime = DateTime.Now;
+                noti.NotificationTitle = "Report";
+                noti.NotificationContent = "Đơn của bạn đã được gửi thành công " + report.ReportId;
+                noti.NotificationStatus = true;
+
+                await this._context.Notification.AddAsync(noti);
+                await this._context.SaveChangesAsync();
+
                 return report;
 
             }catch(Exception ex)
@@ -88,9 +100,21 @@ namespace BCMS.Services
                 check.ManagerId = dto.ManagerId;
                 check.Reply = dto.Reply;
                 check.ReportStatus = true;
+                this._context.Update(check);
 
                 await this._context.SaveChangesAsync();
 
+                var noti = new Notification();
+
+                noti.NotificationId = "NOTI" + Guid.NewGuid().ToString().Substring(0, 6);
+                noti.MemberId = check.MemberId;
+                noti.NotificationDateTime = DateTime.Now;
+                noti.NotificationTitle = "moderate report";
+                noti.NotificationContent = "Đơn của bạn đã được xem xét";
+                noti.NotificationStatus = true;
+
+                await this._context.Notification.AddAsync(noti);
+                await this._context.SaveChangesAsync();
                 return check;
             }catch(Exception ex)
             {

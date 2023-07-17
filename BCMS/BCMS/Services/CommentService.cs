@@ -27,6 +27,35 @@ namespace BCMS.Services
                 await this._context.Comment.AddAsync(cmt);
                 await this._context.SaveChangesAsync();
 
+                var post = await this._context.Post.Where(x=>x.PostId.Equals(comment.PostId)).Include(x=>x.Member).FirstOrDefaultAsync();
+                var mem = await this._context.Member.Where(x => x.MemberId.Equals(comment.MemberId)).FirstOrDefaultAsync();
+                var check = await this._context.JoinEvent.Where(x=>x.PostId.Equals(comment.PostId) && x.IsFollow && x.Status).ToListAsync();
+                foreach(var item in check)
+                {
+                    var noti = new Notification();
+
+                    noti.NotificationId = "NOTI" + Guid.NewGuid().ToString().Substring(0, 6);
+                    noti.MemberId = item.MemberId;
+                    noti.NotificationDateTime = DateTime.Now;
+                    noti.NotificationTitle = "Comment";
+                    noti.NotificationContent = mem.MemberFullName + " đã bình luận bài viết của " + post.Member.MemberFullName;
+                    noti.NotificationStatus = true;
+
+                    await this._context.Notification.AddAsync(noti);
+                    await this._context.SaveChangesAsync();
+                    noti = new Notification();
+                }
+                var noti2 = new Notification();
+
+                noti2.NotificationId = "NOTI" + Guid.NewGuid().ToString().Substring(0, 6);
+                noti2.MemberId = post.MemberId;
+                noti2.NotificationDateTime = DateTime.Now;
+                noti2.NotificationTitle = "Comment";
+                noti2.NotificationContent = mem.MemberFullName + " đã bình luận bài viết của " + post.Member.MemberFullName;
+                noti2.NotificationStatus = true;
+
+                await this._context.Notification.AddAsync(noti2);
+                await this._context.SaveChangesAsync();
                 return cmt;
             }catch(Exception ex)
             {
@@ -61,8 +90,10 @@ namespace BCMS.Services
             try
             {
                 var db = await this._context.Comment
-                    .Include(x=>x.Member)
-                    .Include(x=>x.Post)
+                    .Include(x => x.Member)
+                    .Include(x => x.InverseReply)
+                        .ThenInclude(x => x.Member)
+                    .Include(x => x.Post)
                     .ToListAsync();
                 return db;
             }catch(Exception ex)
@@ -77,6 +108,8 @@ namespace BCMS.Services
             {
                 var db = await this._context.Comment.Where(x => x.Status ||x.PostId.Equals(postid))
                     .Include(x => x.Member)
+                    .Include(x => x.InverseReply)
+                        .ThenInclude(x => x.Member)
                     .Include(x => x.Post)
                     .ToListAsync();
                 return db;
@@ -93,6 +126,8 @@ namespace BCMS.Services
             {
                 var db = await this._context.Comment.Where(x=>x.Status)
                     .Include(x => x.Member)
+                    .Include(x=>x.InverseReply)
+                        .ThenInclude(x=>x.Member)
                     .Include(x => x.Post)
                     .ToListAsync();
                 return db;
@@ -119,6 +154,23 @@ namespace BCMS.Services
 
                 await this._context.Comment.AddAsync(rep);
                 await this._context.SaveChangesAsync();
+
+                var mem = await this._context.Member.Where(x => x.MemberId.Equals(reply.MemberId)).FirstOrDefaultAsync();
+                var check = await this._context.Comment.Where(x => x.CommentId.Equals(rep.ReplyId)).FirstOrDefaultAsync();
+                if (check != null)
+                {
+                    var noti = new Notification();
+
+                    noti.NotificationId = "NOTI" + Guid.NewGuid().ToString().Substring(0,6);
+                    noti.MemberId = check.MemberId;
+                    noti.NotificationDateTime = DateTime.Now;
+                    noti.NotificationTitle = "Reply comment";
+                    noti.NotificationContent = mem.MemberFullName + " đã trả lời bình luận của bạn";
+                    noti.NotificationStatus = true;
+
+                    await this._context.Notification.AddAsync(noti);
+                    await this._context.SaveChangesAsync();
+                }
                 return rep;
             }
             catch(Exception ex)

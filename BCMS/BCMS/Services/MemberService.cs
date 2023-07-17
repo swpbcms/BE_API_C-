@@ -49,7 +49,9 @@ namespace BCMS.Services
                         MemberFullName = x.MemberFullName,
                         MemberId = x.MemberId,
                         MemberImage = x.MemberImage,
-                        MemberStatus = x.MemberStatus
+                        MemberStatus = x.MemberStatus,
+                        MemberPassword = x.MemberPassword,
+                        MemberUserName = x.MemberUserName,
                     })
                     .FirstOrDefaultAsync();
                 if (mem != null)
@@ -78,7 +80,9 @@ namespace BCMS.Services
                         MemberFullName = x.MemberFullName,
                         MemberId = x.MemberId,
                         MemberImage = x.MemberImage,
-                        MemberStatus = x.MemberStatus
+                        MemberStatus = x.MemberStatus,
+                        MemberPassword = x.MemberPassword,
+                        MemberUserName = x.MemberUserName,
                     })
                     .ToListAsync();
                 if (mem != null)
@@ -107,7 +111,9 @@ namespace BCMS.Services
                         MemberFullName= x.MemberFullName,
                         MemberId= x.MemberId,
                         MemberImage= x.MemberImage,
-                        MemberStatus= x.MemberStatus
+                        MemberStatus= x.MemberStatus,
+                        MemberPassword= x.MemberPassword,
+                        MemberUserName= x.MemberUserName
                     })
                     .ToListAsync();
                 if(mem != null)
