@@ -39,6 +39,11 @@ namespace BCMS.Services
         {
             try
             {
+                var li = await this._context.Like.Where(x => x.MemberId.Equals(like.MemberId) && x.PostId.Equals(like.PostId)).FirstOrDefaultAsync();
+                if(li != null)
+                {
+                    return true;
+                }
                 var db = new Like();
                 db.PostId = like.PostId;
                 db.MemberId = like.MemberId;
