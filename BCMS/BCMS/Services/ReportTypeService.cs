@@ -75,7 +75,7 @@ namespace BCMS.Services
             {
                 var check = await this._context.ReportType.Where(x => x.ReportTypeId.Equals(type.ReportTypeId)).FirstOrDefaultAsync();
                 check.ReportTypeName = type.ReportTypeName;
-
+                this._context.ReportType.Update(check);
                 await this._context.SaveChangesAsync();
                 return check;
             }catch(Exception ex)

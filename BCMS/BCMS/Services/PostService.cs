@@ -92,6 +92,7 @@ namespace BCMS.Services
                 if(check != null)
                 {
                     check.PostStatus = "hủy";
+                    this._context.Post.Update(check);
                     await this._context.SaveChangesAsync();
                     return check;
                 }return null;
@@ -255,6 +256,7 @@ namespace BCMS.Services
                         check.PostStatus = "hủy";
                     }
                 }
+                this._context.Post.Update(check);
                 await this._context.SaveChangesAsync();
                 return check;
             }
@@ -321,6 +323,7 @@ namespace BCMS.Services
                         }
                     }
                 }
+                this._context.Post.Update(check);
                 await this._context.SaveChangesAsync();
                 return check;
             }catch(Exception ex)

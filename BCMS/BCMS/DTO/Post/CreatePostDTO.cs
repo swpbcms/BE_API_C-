@@ -13,7 +13,7 @@ namespace BCMS.DTO.Post
         public DateTime? EventEndDate { get; set; }
         public string MemberId { get; set; }
         public List<CategoryEventDTO> categories { get; set; }
-        public List<MediaCreateDTO> media { get; set; }
+        public List<MediaCreateDTO>? media { get; set; }
 
     }
 }

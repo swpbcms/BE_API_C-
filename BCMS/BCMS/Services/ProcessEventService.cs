@@ -72,6 +72,7 @@ namespace BCMS.Services
                 var check = await this._context.ProcessEvent.Where(x => x.ProcessId.Equals(dto.ProcessId)).FirstOrDefaultAsync();
                 check.EventRule = dto.EventRule;
                 check.EventReward = dto.EventReward;
+                this._context.ProcessEvent.Update(check);
                 await this._context.SaveChangesAsync();
                  return check;
             }catch(Exception ex)
