@@ -92,7 +92,7 @@ namespace BCMS.Services
                 }
                 cate.CategoryName = updateCategory.CategoryName;
                 cate.Description = updateCategory.Description;
-                //this._context.Category.Update(cate);
+                this._context.Category.Update(cate);
                 await this._context.SaveChangesAsync();
 
                 return cate;
