@@ -74,6 +74,9 @@ namespace BCMS.Services
                     rep2.Status= false;
                 }
                 cmt.Status = false;
+                this._context.Update(cmt);
+                this._context.SaveChanges();
+                this._context.Update(rep); this._context.SaveChanges();
                 if(await this._context.SaveChangesAsync() > 0)
                 {
                     return true;

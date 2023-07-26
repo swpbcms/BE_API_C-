@@ -21,6 +21,7 @@ namespace BCMS.Services
                 if (check != null)
                 {
                     check.ManagerStatus = false;
+                    this._context.Manager.Update(check);
                     await this._context.SaveChangesAsync();
 
                     return check;
@@ -136,7 +137,7 @@ namespace BCMS.Services
                     check.ManagerImage = updateMem.ManagerImage;
                     check.ManagerFullName = updateMem.ManagerFullName;
                     check.ManagerPassword = updateMem.ManagerPassword;
-
+                    this._context.Manager.Update(check);
                     await this._context.SaveChangesAsync();
                     return check;
                 }

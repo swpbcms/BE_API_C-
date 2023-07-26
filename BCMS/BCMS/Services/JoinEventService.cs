@@ -27,7 +27,7 @@ namespace BCMS.Services
 
                     var post = await this._context.Post.Where(x => x.PostId.Equals(join.PostId)).FirstOrDefaultAsync();
                     post.PostNumberJoin -= 1;
-
+                    this._context.Update(post);
                     await this._context.SaveChangesAsync();
                     return true;
                 }return false;
@@ -83,7 +83,7 @@ namespace BCMS.Services
 
                     var post = await this._context.Post.Where(x => x.PostId.Equals(join.PostId)).FirstOrDefaultAsync();
                     post.PostNumberJoin += 1;
-
+                    this._context.Post.Update(post);
                     await this._context.SaveChangesAsync();
                     return true;
                 }
@@ -101,7 +101,7 @@ namespace BCMS.Services
 
                     var post = await this._context.Post.Where(x=>x.PostId.Equals(join.PostId)).FirstOrDefaultAsync();
                     post.PostNumberJoin += 1;
-
+                    this._context.Post.Update(post);
                     await this._context.SaveChangesAsync();
 
                     var post1 = await this._context.Post.Where(x => x.PostId.Equals(join.PostId)).Include(x => x.Member).FirstOrDefaultAsync();

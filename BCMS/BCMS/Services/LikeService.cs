@@ -23,6 +23,7 @@ namespace BCMS.Services
                 {
                     var check = await this._context.Post.Where(x => x.PostId.Equals(like.PostId)).FirstOrDefaultAsync();
                     check.PostNumberLike = check.PostNumberLike -1;
+                    this._context.Post.Update(check);
                     await this._context.SaveChangesAsync();
                     return true;
                 }
@@ -48,7 +49,7 @@ namespace BCMS.Services
                 {
                     var check = await this._context.Post.Where(x=>x.PostId.Equals(like.PostId)).Include(x=>x.Member).FirstOrDefaultAsync();
                     check.PostNumberLike = check.PostNumberLike+1;
-
+                    this._context.Post.Update(check);
                     await this._context.SaveChangesAsync();
 
                     var mem = await this._context.Member.Where(x => x.MemberId.Equals(like.MemberId)).FirstOrDefaultAsync();
