@@ -168,6 +168,11 @@ namespace BCMS.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Report_Member");
 
+                entity.HasOne(d => d.Post)
+                    .WithMany(p => p.Report)
+                    .HasForeignKey(d => d.PostId)
+                    .HasConstraintName("FK_Report_Post");
+
                 entity.HasOne(d => d.ReportTypeNavigation)
                     .WithMany(p => p.Report)
                     .HasForeignKey(d => d.ReportType)
