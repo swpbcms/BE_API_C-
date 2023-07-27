@@ -18,6 +18,7 @@ namespace BCMS.Models
             Media = new HashSet<Media>();
             PostCategory = new HashSet<PostCategory>();
             ProcessEvent = new HashSet<ProcessEvent>();
+            Report = new HashSet<Report>();
         }
 
         [Key]
@@ -67,5 +68,7 @@ namespace BCMS.Models
         public virtual ICollection<PostCategory> PostCategory { get; set; }
         [InverseProperty("Post")]
         public virtual ICollection<ProcessEvent> ProcessEvent { get; set; }
+        [InverseProperty("Post")]
+        public virtual ICollection<Report> Report { get; set; }
     }
 }
