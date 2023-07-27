@@ -17,5 +17,6 @@ namespace BCMS.Interface
         Task<Post> moderate(string id, bool option,string managerID);
         Task<List<Like>> getLikeMember(string id);
         Task<List<JoinEvent>> getJoinMember(string id);
+        Task<Post> reStatus(string id);
     }
 }

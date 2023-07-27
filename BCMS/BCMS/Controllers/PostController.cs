@@ -35,6 +35,23 @@ namespace BCMS.Controllers
             }
         }
 
+        [Route("restatus-post")]
+        [HttpPost]
+        public async Task<IActionResult> restatus(string dto)
+        {
+            ResponseAPI<Post> responseAPI = new ResponseAPI<Post>();
+            try
+            {
+                responseAPI.Data = await this.service.reStatus(dto);
+                return Ok(responseAPI);
+            }
+            catch (Exception ex)
+            {
+                responseAPI.Message = ex.Message;
+                return BadRequest(responseAPI);
+            }
+        }
+
         [Route("get-post")]
         [HttpGet]
         public async Task<IActionResult> get()
