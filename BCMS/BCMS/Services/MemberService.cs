@@ -21,6 +21,7 @@ namespace BCMS.Services
                 if (mem != null)
                 {
                     mem.MemberStatus = false;
+                    this._context.Member.Update(mem);
                     await this._context.SaveChangesAsync();
                 }
                 else
