@@ -25,6 +25,7 @@ namespace BCMS.Services
                 report.DateTime = DateTime.Now;
                 report.ReportStatus = false;
                 report.ReportTitle = dto.ReportTitle;
+                report.PostId = dto.PosId;
                 
                 await this._context.AddAsync(report);
                 await this._context.SaveChangesAsync();

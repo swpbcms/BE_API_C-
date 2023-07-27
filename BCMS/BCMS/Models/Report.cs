@@ -33,6 +33,9 @@ namespace BCMS.Models
         [Column(TypeName = "datetime")]
         public DateTime DateTime { get; set; }
         public string Reply { get; set; }
+        [Column("postId")]
+        [StringLength(10)]
+        public string PostId { get; set; }
 
         [ForeignKey("ManagerId")]
         [InverseProperty("Report")]
@@ -40,6 +43,9 @@ namespace BCMS.Models
         [ForeignKey("MemberId")]
         [InverseProperty("Report")]
         public virtual Member Member { get; set; }
+        [ForeignKey("PostId")]
+        [InverseProperty("Report")]
+        public virtual Post Post { get; set; }
         [ForeignKey("ReportType")]
         [InverseProperty("Report")]
         public virtual ReportType ReportTypeNavigation { get; set; }
