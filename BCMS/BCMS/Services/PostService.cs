@@ -3,6 +3,7 @@ using BCMS.DTO.Post;
 using BCMS.Interface;
 using BCMS.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 
 namespace BCMS.Services
 {
@@ -327,6 +328,25 @@ namespace BCMS.Services
                 await this._context.SaveChangesAsync();
                 return check;
             }catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<Post> reStatus(string id)
+        {
+            try
+            {
+                var check = await this._context.Post.Where(x => x.PostId.Equals(id)).FirstOrDefaultAsync();
+                if (check != null)
+                {
+                    check.PostStatus = "Thành công";
+                }
+                this._context.Post.Update(check);
+                await this._context.SaveChangesAsync();
+                return check;
+            }
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }

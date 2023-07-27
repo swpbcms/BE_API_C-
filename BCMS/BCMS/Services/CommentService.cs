@@ -76,7 +76,7 @@ namespace BCMS.Services
                 cmt.Status = false;
                 this._context.Update(cmt);
                 this._context.SaveChanges();
-                this._context.Update(rep); this._context.SaveChanges();
+                this._context.Update(rep); 
                 if(await this._context.SaveChangesAsync() > 0)
                 {
                     return true;
@@ -190,6 +190,7 @@ namespace BCMS.Services
                 if (check != null)
                 {
                     check.CommentContent= comment.CommentContent;
+                    this._context.Comment.Update(check);
                     await this._context.SaveChangesAsync();
                 }
                 return check;
