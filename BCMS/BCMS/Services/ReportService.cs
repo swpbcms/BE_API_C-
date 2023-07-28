@@ -123,14 +123,14 @@ namespace BCMS.Services
             }
         }
 
-        public async Task<Report> moderateAdmin(string reportID, string Reply)
+        public async Task<Report> moderateAdmin(reportAD ad)
         {
             try
             {
-                var check = await this._context.Report.Where(x=>x.ReportId.Equals(reportID)).FirstOrDefaultAsync();
+                var check = await this._context.Report.Where(x=>x.ReportId.Equals(ad.reportID)).FirstOrDefaultAsync();
                 if(check!=null)
                 {
-                    check.Reply = Reply;
+                    check.Reply = ad.Reply;
                 }
                 this._context.Report.Update(check); await this._context.SaveChangesAsync();
                 return check;
