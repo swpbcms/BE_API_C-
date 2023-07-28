@@ -104,12 +104,12 @@ namespace BCMS.Controllers
 
         [Route("moderate-report-admin")]
         [HttpPost]
-        public async Task<IActionResult> moderateadmin(string reportID, string Reply)
+        public async Task<IActionResult> moderateadmin(reportAD ad)
         {
             ResponseAPI<List<Report>> responseAPI = new ResponseAPI<List<Report>>();
             try
             {
-                responseAPI.Data = await this.service.moderateAdmin( reportID, Reply);
+                responseAPI.Data = await this.service.moderateAdmin(ad);
                 return Ok(responseAPI);
             }
             catch (Exception ex)
