@@ -192,6 +192,7 @@ namespace BCMS.Services
                         .ThenInclude(x=>x.InverseReply)
                         .ThenInclude(u => u.Member)
                     .Include(x=>x.ProcessEvent)
+                    .OrderByDescending(x=>x.PostCreateAt)
                     .ToListAsync();
                 if(check != null)
                 {

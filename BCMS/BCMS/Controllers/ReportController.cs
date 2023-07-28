@@ -101,5 +101,22 @@ namespace BCMS.Controllers
                 return BadRequest(responseAPI);
             }
         }
+
+        [Route("moderate-report-admin")]
+        [HttpPost]
+        public async Task<IActionResult> moderateadmin(string reportID, string Reply)
+        {
+            ResponseAPI<List<Report>> responseAPI = new ResponseAPI<List<Report>>();
+            try
+            {
+                responseAPI.Data = await this.service.moderateAdmin( reportID, Reply);
+                return Ok(responseAPI);
+            }
+            catch (Exception ex)
+            {
+                responseAPI.Message = ex.Message;
+                return BadRequest(responseAPI);
+            }
+        }
     }
 }

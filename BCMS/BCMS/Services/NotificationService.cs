@@ -28,7 +28,7 @@ namespace BCMS.Services
         {
             try
             {
-                var check = await this._context.Notification.Where(x=>x.MemberId.Equals(id)).OrderByDescending(x => x.NotificationDateTime).ToListAsync();
+                var check = await this._context.Notification.Where(x=>x.MemberId.Equals(id)).Include(x=>x.Member).OrderByDescending(x => x.NotificationDateTime).ToListAsync();
                 return check;
             }
             catch (Exception ex)
