@@ -322,6 +322,8 @@ namespace BCMS.Services
                             check.EventStartDate = post.EventStartDate;
                             check.EventEndDate = post.EventEndDate;
                             check.EventLocation = post.EventLocation;
+                            check.PostStatus = "Chờ duyệt";
+                            check.PostIsEvent = true;
                         }
                     }
                 }
