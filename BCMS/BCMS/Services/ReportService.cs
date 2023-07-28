@@ -122,5 +122,22 @@ namespace BCMS.Services
                 throw new Exception(ex.Message);
             }
         }
+
+        public async Task<Report> moderateAdmin(string reportID, string Reply)
+        {
+            try
+            {
+                var check = await this._context.Report.Where(x=>x.ReportId.Equals(reportID)).FirstOrDefaultAsync();
+                if(check!=null)
+                {
+                    check.Reply = Reply;
+                }
+                this._context.Update(Reply); await this._context.SaveChangesAsync();
+                return check;
+            }catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
