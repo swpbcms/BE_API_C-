@@ -132,7 +132,7 @@ namespace BCMS.Services
                 {
                     check.Reply = Reply;
                 }
-                this._context.Update(Reply); await this._context.SaveChangesAsync();
+                this._context.Report.Update(check); await this._context.SaveChangesAsync();
                 return check;
             }catch(Exception ex)
             {
