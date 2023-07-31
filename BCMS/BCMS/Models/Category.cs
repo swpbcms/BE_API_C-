@@ -12,7 +12,7 @@ namespace BCMS.Models
     {
         public Category()
         {
-            Post = new HashSet<Post>();
+            PostCategory = new HashSet<PostCategory>();
         }
 
         [Key]
@@ -23,8 +23,7 @@ namespace BCMS.Models
         public string CategoryName { get; set; }
         public string Description { get; set; }
 
-        [ForeignKey("CategoryId")]
         [InverseProperty("Category")]
-        public virtual ICollection<Post> Post { get; set; }
+        public virtual ICollection<PostCategory> PostCategory { get; set; }
     }
 }

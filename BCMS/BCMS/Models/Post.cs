@@ -16,8 +16,9 @@ namespace BCMS.Models
             JoinEvent = new HashSet<JoinEvent>();
             Like = new HashSet<Like>();
             Media = new HashSet<Media>();
+            PostCategory = new HashSet<PostCategory>();
             ProcessEvent = new HashSet<ProcessEvent>();
-            Category = new HashSet<Category>();
+            Report = new HashSet<Report>();
         }
 
         [Key]
@@ -45,7 +46,6 @@ namespace BCMS.Models
         [Column("MemberID")]
         [StringLength(10)]
         public string MemberId { get; set; }
-        [Required]
         [Column("ManagerID")]
         [StringLength(10)]
         public string ManagerId { get; set; }
@@ -65,10 +65,10 @@ namespace BCMS.Models
         [InverseProperty("Post")]
         public virtual ICollection<Media> Media { get; set; }
         [InverseProperty("Post")]
-        public virtual ICollection<ProcessEvent> ProcessEvent { get; set; }
-
-        [ForeignKey("PostId")]
+        public virtual ICollection<PostCategory> PostCategory { get; set; }
         [InverseProperty("Post")]
-        public virtual ICollection<Category> Category { get; set; }
+        public virtual ICollection<ProcessEvent> ProcessEvent { get; set; }
+        [InverseProperty("Post")]
+        public virtual ICollection<Report> Report { get; set; }
     }
 }

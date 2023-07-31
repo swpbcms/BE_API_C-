@@ -8,7 +8,7 @@ namespace BCMS.Interface
     {
         Task<List<Member>> GetList();
         Task<Member> GetById(string id);
-        Task<Member> GetByName(string name);
+        Task<List<Member>> GetByName(string name);
         Task<Member> Register(MemberRegisterDTO newMem);
         Task<Member> Update(updateMemberDTO updateMem);
         Task<Member> Login(MemberLoginDTO login);

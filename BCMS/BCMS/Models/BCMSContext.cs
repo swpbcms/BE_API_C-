@@ -27,6 +27,7 @@ namespace BCMS.Models
         public virtual DbSet<Member> Member { get; set; }
         public virtual DbSet<Notification> Notification { get; set; }
         public virtual DbSet<Post> Post { get; set; }
+        public virtual DbSet<PostCategory> PostCategory { get; set; }
         public virtual DbSet<ProcessEvent> ProcessEvent { get; set; }
         public virtual DbSet<Report> Report { get; set; }
         public virtual DbSet<ReportType> ReportType { get; set; }
@@ -36,7 +37,7 @@ namespace BCMS.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=DESKTOP-QKQ1PQ7\\SQLEXPRESS;Initial Catalog=BCMS;User ID=sa;Password=sa");
+                optionsBuilder.UseSqlServer("Data Source=MINHNGUYEN\\SQLEXPRESS;Initial Catalog=BCMS;Persist Security Info=True;User ID=sa;Password=sa");
             }
         }
 
@@ -119,7 +120,6 @@ namespace BCMS.Models
                 entity.HasOne(d => d.Manager)
                     .WithMany(p => p.Post)
                     .HasForeignKey(d => d.ManagerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Post_Manager");
 
                 entity.HasOne(d => d.Member)
@@ -127,23 +127,23 @@ namespace BCMS.Models
                     .HasForeignKey(d => d.MemberId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Post_Member");
+            });
 
-                entity.HasMany(d => d.Category)
-                    .WithMany(p => p.Post)
-                    .UsingEntity<Dictionary<string, object>>(
-                        "PostCategory",
-                        l => l.HasOne<Category>().WithMany().HasForeignKey("CategoryId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_PostCategory_Category"),
-                        r => r.HasOne<Post>().WithMany().HasForeignKey("PostId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_PostCategory_Post"),
-                        j =>
-                        {
-                            j.HasKey("PostId", "CategoryId");
+            modelBuilder.Entity<PostCategory>(entity =>
+            {
+                entity.HasKey(e => new { e.PostId, e.CategoryId });
 
-                            j.ToTable("PostCategory");
+                entity.HasOne(d => d.Category)
+                    .WithMany(p => p.PostCategory)
+                    .HasForeignKey(d => d.CategoryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_PostCategory_Category");
 
-                            j.IndexerProperty<string>("PostId").HasMaxLength(10).HasColumnName("PostID");
-
-                            j.IndexerProperty<string>("CategoryId").HasMaxLength(10).HasColumnName("CategoryID");
-                        });
+                entity.HasOne(d => d.Post)
+                    .WithMany(p => p.PostCategory)
+                    .HasForeignKey(d => d.PostId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_PostCategory_Post");
             });
 
             modelBuilder.Entity<ProcessEvent>(entity =>
@@ -160,7 +160,6 @@ namespace BCMS.Models
                 entity.HasOne(d => d.Manager)
                     .WithMany(p => p.Report)
                     .HasForeignKey(d => d.ManagerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Report_Manager");
 
                 entity.HasOne(d => d.Member)
@@ -168,6 +167,11 @@ namespace BCMS.Models
                     .HasForeignKey(d => d.MemberId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Report_Member");
+
+                entity.HasOne(d => d.Post)
+                    .WithMany(p => p.Report)
+                    .HasForeignKey(d => d.PostId)
+                    .HasConstraintName("FK_Report_Post");
 
                 entity.HasOne(d => d.ReportTypeNavigation)
                     .WithMany(p => p.Report)
