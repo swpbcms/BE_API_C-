@@ -20,9 +20,17 @@ namespace BCMS.Models
         public string PostId { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime DateTime { get; set; }
-        public bool Status { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string Status { get; set; }
         public bool IsFollow { get; set; }
+        [Required]
+        [StringLength(10)]
+        public string BirdId { get; set; }
 
+        [ForeignKey("BirdId")]
+        [InverseProperty("JoinEvent")]
+        public virtual Bird Bird { get; set; }
         [ForeignKey("MemberId")]
         [InverseProperty("JoinEvent")]
         public virtual Member Member { get; set; }

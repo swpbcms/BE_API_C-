@@ -20,7 +20,7 @@ namespace BCMS.Services
                 var mem = await this._context.Member.Where(x=>x.MemberId.Equals(id)).FirstOrDefaultAsync();
                 if (mem != null)
                 {
-                    mem.MemberStatus = false;
+                    mem.MemberStatus = "inActive";
                     this._context.Member.Update(mem);
                     await this._context.SaveChangesAsync();
                 }
@@ -132,7 +132,7 @@ namespace BCMS.Services
             try
             {
                 var checkLogin = await this._context.Member.Where(x=>x.MemberUserName.Equals(login.MemberUserName)
-                && x.MemberPassword.Equals(login.MemberPassword) && x.MemberStatus).FirstOrDefaultAsync();
+                && x.MemberPassword.Equals(login.MemberPassword) && x.MemberStatus.Equals("active")).FirstOrDefaultAsync();
                 if (checkLogin == null)
                 {
                     throw new Exception("invalid account");
@@ -156,7 +156,7 @@ namespace BCMS.Services
                 mem.MemberDob = newMem.MemberDob;
                 mem.MemberEmail = newMem.MemberEmail;
                 mem.MemberImage = newMem.MemberImage;
-                mem.MemberStatus = true;
+                mem.MemberStatus = "active";
                 mem.MemberId = "Mem"+Guid.NewGuid().ToString().Substring(0,7);
                 mem.MemberFullName= newMem.MemberFullName;
                 

@@ -33,6 +33,9 @@ builder.Services.AddScoped<IMedia, MediaService>();
 builder.Services.AddScoped<IManager, ManagerService>();
 builder.Services.AddScoped<INotification, NotificationService>();
 builder.Services.AddScoped<IAdmin, AdminService>();
+builder.Services.AddScoped<IBird, BirdService>();
+builder.Services.AddScoped<IBirdType, BirdTypeService>();
+builder.Services.AddScoped<IBlog, BlogService>();
 
 
 

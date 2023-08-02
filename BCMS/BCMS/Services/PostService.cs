@@ -60,7 +60,23 @@ namespace BCMS.Services
                         postCate = new PostCategory();
                     }
                 }
+                foreach(var bird in post.birdTypes)
+                {
+                    var check = await this._context.BirdType.Where(c => c.BirdTypeId.Equals(bird.BirdTypeId)).FirstOrDefaultAsync();
+                    if (check != null)
+                    {
+                        var type = new BirdTypeEvent();
 
+                        type.PostId = pst.PostId;
+                        type.BirdTypeId = check.BirdTypeId;
+                        type.DateTime = DateTime.Now;
+
+                        await this._context.BirdTypeEvent.AddAsync(type);
+                        await this._context.SaveChangesAsync();
+
+                        type = new BirdTypeEvent();
+                    }
+                }
 
                     foreach(var media in post.media)
                     {
@@ -164,23 +180,6 @@ namespace BCMS.Services
             try
             {
                 var check = await this._context.Post
-                    //.Select(x=> new Post
-                    //{
-                    //    ManagerId= x.ManagerId,
-                    //    PostId= x.PostId,
-                    //    MemberId= x.MemberId,
-                    //    PostTitle= x.PostTitle,
-                    //    PostDescription= x.PostDescription,
-                    //    PostIsEvent= x.PostIsEvent,
-                    //    EventStartDate= x.EventStartDate,
-                    //    EventEndDate= x.EventEndDate,
-                    //    EventLocation= x.EventLocation,
-                    //    PostCreateAt= x.PostCreateAt,
-                    //    PostNumberJoin= x.PostNumberJoin,
-                    //    PostNumberLike  = x.PostNumberLike,
-                    //    PostStatus= x.PostStatus
-                    //})
-                    //.Include(x=>x.ManagerId)
                     .Include(x=> x.PostCategory).ThenInclude(x=>x.Category)
                     .Include(x=>x.Member)
                     .Include(x=>x.Media)

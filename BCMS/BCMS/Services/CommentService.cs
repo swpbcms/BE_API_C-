@@ -29,7 +29,7 @@ namespace BCMS.Services
 
                 var post = await this._context.Post.Where(x=>x.PostId.Equals(comment.PostId)).Include(x=>x.Member).FirstOrDefaultAsync();
                 var mem = await this._context.Member.Where(x => x.MemberId.Equals(comment.MemberId)).FirstOrDefaultAsync();
-                var check = await this._context.JoinEvent.Where(x=>x.PostId.Equals(comment.PostId) && x.IsFollow && x.Status).ToListAsync();
+                var check = await this._context.JoinEvent.Where(x=>x.PostId.Equals(comment.PostId) && x.IsFollow && x.Status.Equals("tham gia")).ToListAsync();
                 foreach(var item in check)
                 {
                     var noti = new Notification();

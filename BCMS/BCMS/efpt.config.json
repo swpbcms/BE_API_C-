@@ -15,6 +15,26 @@
    "SelectedToBeGenerated": 0,
    "Tables": [
       {
+         "Name": "[dbo].[Bird]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[BirdEvent]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[BirdType]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[BirdTypeEvent]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Blog]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Category]",
          "ObjectType": 0
       },
