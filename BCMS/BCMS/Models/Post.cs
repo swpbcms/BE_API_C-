@@ -12,6 +12,8 @@ namespace BCMS.Models
     {
         public Post()
         {
+            BirdEvent = new HashSet<BirdEvent>();
+            BirdTypeEvent = new HashSet<BirdTypeEvent>();
             Comment = new HashSet<Comment>();
             JoinEvent = new HashSet<JoinEvent>();
             Like = new HashSet<Like>();
@@ -56,6 +58,10 @@ namespace BCMS.Models
         [ForeignKey("MemberId")]
         [InverseProperty("Post")]
         public virtual Member Member { get; set; }
+        [InverseProperty("Post")]
+        public virtual ICollection<BirdEvent> BirdEvent { get; set; }
+        [InverseProperty("Post")]
+        public virtual ICollection<BirdTypeEvent> BirdTypeEvent { get; set; }
         [InverseProperty("Post")]
         public virtual ICollection<Comment> Comment { get; set; }
         [InverseProperty("Post")]

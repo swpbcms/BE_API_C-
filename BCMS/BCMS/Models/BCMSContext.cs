@@ -18,6 +18,11 @@ namespace BCMS.Models
         {
         }
 
+        public virtual DbSet<Bird> Bird { get; set; }
+        public virtual DbSet<BirdEvent> BirdEvent { get; set; }
+        public virtual DbSet<BirdType> BirdType { get; set; }
+        public virtual DbSet<BirdTypeEvent> BirdTypeEvent { get; set; }
+        public virtual DbSet<Blog> Blog { get; set; }
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<Comment> Comment { get; set; }
         public virtual DbSet<JoinEvent> JoinEvent { get; set; }
@@ -43,6 +48,68 @@ namespace BCMS.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Bird>(entity =>
+            {
+                entity.HasOne(d => d.BirdType)
+                    .WithMany(p => p.Bird)
+                    .HasForeignKey(d => d.BirdTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Bird_BirdType");
+
+                entity.HasOne(d => d.Member)
+                    .WithMany(p => p.Bird)
+                    .HasForeignKey(d => d.MemberId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Bird_Member");
+            });
+
+            modelBuilder.Entity<BirdEvent>(entity =>
+            {
+                entity.HasOne(d => d.Bird1Navigation)
+                    .WithMany(p => p.BirdEventBird1Navigation)
+                    .HasForeignKey(d => d.Bird1)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_BirdEvent_Bird");
+
+                entity.HasOne(d => d.Bird2Navigation)
+                    .WithMany(p => p.BirdEventBird2Navigation)
+                    .HasForeignKey(d => d.Bird2)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_BirdEvent_Bird1");
+
+                entity.HasOne(d => d.Post)
+                    .WithMany(p => p.BirdEvent)
+                    .HasForeignKey(d => d.PostId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_BirdEvent_Post");
+            });
+
+            modelBuilder.Entity<BirdTypeEvent>(entity =>
+            {
+                entity.HasKey(e => new { e.BirdTypeId, e.PostId });
+
+                entity.HasOne(d => d.BirdType)
+                    .WithMany(p => p.BirdTypeEvent)
+                    .HasForeignKey(d => d.BirdTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_BirdTypeEvent_BirdType");
+
+                entity.HasOne(d => d.Post)
+                    .WithMany(p => p.BirdTypeEvent)
+                    .HasForeignKey(d => d.PostId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_BirdTypeEvent_Post");
+            });
+
+            modelBuilder.Entity<Blog>(entity =>
+            {
+                entity.HasOne(d => d.Manager)
+                    .WithMany(p => p.Blog)
+                    .HasForeignKey(d => d.ManagerId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Blog_Manager");
+            });
+
             modelBuilder.Entity<Comment>(entity =>
             {
                 entity.HasOne(d => d.Member)
@@ -66,6 +133,12 @@ namespace BCMS.Models
             modelBuilder.Entity<JoinEvent>(entity =>
             {
                 entity.HasKey(e => new { e.MemberId, e.PostId });
+
+                entity.HasOne(d => d.Bird)
+                    .WithMany(p => p.JoinEvent)
+                    .HasForeignKey(d => d.BirdId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_JoinEvent_Bird");
 
                 entity.HasOne(d => d.Member)
                     .WithMany(p => p.JoinEvent)
@@ -99,6 +172,11 @@ namespace BCMS.Models
 
             modelBuilder.Entity<Media>(entity =>
             {
+                entity.HasOne(d => d.Blog)
+                    .WithMany(p => p.Media)
+                    .HasForeignKey(d => d.BlogId)
+                    .HasConstraintName("FK_Media_Blog");
+
                 entity.HasOne(d => d.Post)
                     .WithMany(p => p.Media)
                     .HasForeignKey(d => d.PostId)

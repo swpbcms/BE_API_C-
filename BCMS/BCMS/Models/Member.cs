@@ -14,6 +14,7 @@ namespace BCMS.Models
     {
         public Member()
         {
+            Bird = new HashSet<Bird>();
             Comment = new HashSet<Comment>();
             JoinEvent = new HashSet<JoinEvent>();
             Like = new HashSet<Like>();
@@ -38,14 +39,19 @@ namespace BCMS.Models
         public string MemberEmail { get; set; }
         [Column("MemberDOB", TypeName = "date")]
         public DateTime? MemberDob { get; set; }
-        public bool MemberStatus { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string MemberStatus { get; set; }
         [Required]
         [StringLength(50)]
         public string MemberUserName { get; set; }
         [Required]
         [StringLength(50)]
         public string MemberPassword { get; set; }
+        public int? NumberOfBird { get; set; }
 
+        [InverseProperty("Member")]
+        public virtual ICollection<Bird> Bird { get; set; }
         [InverseProperty("Member")]
         public virtual ICollection<Comment> Comment { get; set; }
         [InverseProperty("Member")]

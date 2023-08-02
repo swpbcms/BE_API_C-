@@ -8,27 +8,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BCMS.Models
 {
-    public partial class Media
+    public partial class BirdTypeEvent
     {
         [Key]
-        [Column("MediaID")]
         [StringLength(10)]
-        public string MediaId { get; set; }
-        [Required]
-        [Column("PostID")]
+        public string BirdTypeId { get; set; }
+        [Key]
         [StringLength(10)]
         public string PostId { get; set; }
-        [Required]
-        public string LinkMedia { get; set; }
-        public bool Status { get; set; }
-        [StringLength(10)]
-        public string BlogId { get; set; }
+        [Column(TypeName = "date")]
+        public DateTime DateTime { get; set; }
 
-        [ForeignKey("BlogId")]
-        [InverseProperty("Media")]
-        public virtual Blog Blog { get; set; }
+        [ForeignKey("BirdTypeId")]
+        [InverseProperty("BirdTypeEvent")]
+        public virtual BirdType BirdType { get; set; }
         [ForeignKey("PostId")]
-        [InverseProperty("Media")]
+        [InverseProperty("BirdTypeEvent")]
         public virtual Post Post { get; set; }
     }
 }
