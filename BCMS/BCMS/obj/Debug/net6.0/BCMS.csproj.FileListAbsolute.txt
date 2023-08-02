@@ -135,3 +135,4 @@ C:\Users\nghia\Source\Repos\BE_API_C-\BCMS\BCMS\obj\Debug\net6.0\ref\BCMS.dll
 D:\SWP\BE_API_C-\BCMS\BCMS\bin\Debug\net6.0\Microsoft.AspNetCore.JsonPatch.dll
 D:\SWP\BE_API_C-\BCMS\BCMS\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 D:\SWP\BE_API_C-\BCMS\BCMS\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
+D:\SWP\BE_API_C-\BCMS\BCMS\bin\Debug\net6.0\admin.json

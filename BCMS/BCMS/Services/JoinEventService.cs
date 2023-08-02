@@ -17,10 +17,10 @@ namespace BCMS.Services
         {
             try
             {
-                var check = await this._context.JoinEvent.Where(x=>x.PostId.Equals(join.PostId) && x.MemberId.Equals(join.MemberId)).FirstOrDefaultAsync();
+                var check = await this._context.JoinEvent.Where(x=>x.PostId.Equals(join.PostId) && x.MemberId.Equals(join.MemberId) && x.BirdId.Equals(join.BirdId)).FirstOrDefaultAsync();
                 if (check != null)
                 {
-                    check.Status = false;
+                    check.Status = "hủy tham gia";
                     this._context.Update(check);
 
                     await this._context.SaveChangesAsync();
@@ -41,10 +41,9 @@ namespace BCMS.Services
         {
             try
             {
-                var check = await this._context.JoinEvent.Where(x => x.PostId.Equals(join.PostId) && x.MemberId.Equals(join.MemberId)).FirstOrDefaultAsync();
+                var check = await this._context.JoinEvent.Where(x => x.PostId.Equals(join.PostId) && x.MemberId.Equals(join.MemberId)&& x.BirdId.Equals(join.BirdId)).FirstOrDefaultAsync();
                 if (check != null)
                 {
-                    check.Status = true;
                     check.IsFollow = true;
                     this._context.Update(check);
 
@@ -56,7 +55,11 @@ namespace BCMS.Services
                     var joinEV = new JoinEvent();
                     joinEV.PostId = join.PostId;
                     joinEV.MemberId = join.MemberId;
-                    joinEV.Status= join.Status;
+                    if (join.Status)
+                    {
+                        joinEV.Status = "tham gia";
+                    }
+                    joinEV.Status = "";
                     joinEV.IsFollow = true;
 
                     await this._context.JoinEvent.AddAsync(joinEV);
@@ -75,11 +78,12 @@ namespace BCMS.Services
         {
             try
             {
-                var check = await this._context.JoinEvent.Where(x => x.PostId.Equals(join.PostId) && x.MemberId.Equals(join.MemberId)).FirstOrDefaultAsync();
+                var check = await this._context.JoinEvent.Where(x => x.PostId.Equals(join.PostId) && x.MemberId.Equals(join.MemberId) && x.BirdId.Equals(join.BirdId)).FirstOrDefaultAsync();
                 if (check != null)
                 {
-                    check.Status = true;
+                    check.Status = "tham gia";
                     check.IsFollow = true;
+                    check.BirdId = join.BirdId;
 
                     var post = await this._context.Post.Where(x => x.PostId.Equals(join.PostId)).FirstOrDefaultAsync();
                     post.PostNumberJoin += 1;
@@ -92,7 +96,8 @@ namespace BCMS.Services
                     var joinEV = new JoinEvent();
                     joinEV.PostId = join.PostId;
                     joinEV.MemberId = join.MemberId;
-                    joinEV.Status = true;
+                    joinEV.BirdId = join.BirdId;
+                    joinEV.Status = "tham gia";
                     joinEV.IsFollow = true;
                     joinEV.DateTime = DateTime.Now;
 
@@ -106,7 +111,7 @@ namespace BCMS.Services
 
                     var post1 = await this._context.Post.Where(x => x.PostId.Equals(join.PostId)).Include(x => x.Member).FirstOrDefaultAsync();
                     var mem = await this._context.Member.Where(x => x.MemberId.Equals(join.MemberId)).FirstOrDefaultAsync();
-                    var check1 = await this._context.JoinEvent.Where(x => x.PostId.Equals(join.PostId) && x.IsFollow && x.Status).ToListAsync();
+                    var check1 = await this._context.JoinEvent.Where(x => x.PostId.Equals(join.PostId) && x.IsFollow && x.Status.Equals("tham gia")).ToListAsync();
                     foreach (var item in check1)
                     {
                         var noti = new Notification();
@@ -136,7 +141,7 @@ namespace BCMS.Services
         {
             try
             {
-                var check = await this._context.JoinEvent.Where(x => x.PostId.Equals(join.PostId) && x.MemberId.Equals(join.MemberId)).FirstOrDefaultAsync();
+                var check = await this._context.JoinEvent.Where(x => x.PostId.Equals(join.PostId) && x.MemberId.Equals(join.MemberId) && x.BirdId.Equals(join.BirdId)).FirstOrDefaultAsync();
                 if (check != null)
                 {
                     check.IsFollow = false;

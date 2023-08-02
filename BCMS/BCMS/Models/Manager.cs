@@ -15,6 +15,7 @@ namespace BCMS.Models
     {
         public Manager()
         {
+            Blog = new HashSet<Blog>();
             Post = new HashSet<Post>();
             Report = new HashSet<Report>();
         }
@@ -41,6 +42,8 @@ namespace BCMS.Models
         [Required]
         public string ManagerImage { get; set; }
 
+        [InverseProperty("Manager")]
+        public virtual ICollection<Blog> Blog { get; set; }
         [InverseProperty("Manager")]
         public virtual ICollection<Post> Post { get; set; }
         [InverseProperty("Manager")]

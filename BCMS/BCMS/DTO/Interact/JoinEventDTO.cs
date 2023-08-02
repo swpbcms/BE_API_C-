@@ -8,6 +8,7 @@ namespace BCMS.DTO.Interact
     {
         public string MemberId { get; set; }
         public string PostId { get; set; }
+        public string BirdId { get; set; }
         public bool? IsFollow { get; set; }
         public bool Status { get; set; }
     }
