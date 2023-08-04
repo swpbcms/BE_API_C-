@@ -24,7 +24,7 @@ namespace BCMS.Models
         [StringLength(50)]
         public string Status { get; set; }
         public bool IsFollow { get; set; }
-        [Required]
+        [Key]
         [StringLength(10)]
         public string BirdId { get; set; }
 

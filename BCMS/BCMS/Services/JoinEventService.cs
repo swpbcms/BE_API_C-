@@ -2,6 +2,7 @@
 using BCMS.Interface;
 using BCMS.Models;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Versioning;
 
 namespace BCMS.Services
 {
@@ -11,6 +12,27 @@ namespace BCMS.Services
         public JoinEventService(BCMSContext context)
         {
             _context = context;
+        }
+
+        public async Task<List<Bird>> birdJoin(BirdJoin dto)
+        {
+            try
+            {
+                var check = await this._context.BirdTypeEvent.Where(x=>x.PostId.Equals(dto.PostId)).FirstOrDefaultAsync();
+                var check2 = await this._context.Bird.Where(x=>x.MemberId.Equals(dto.MemberId) && x.BirdTypeId.Equals(check.BirdTypeId)).ToListAsync();
+                if(check2 != null)
+                {
+                    return check2;
+                }
+                else
+                {
+                    throw new Exception("null");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public async Task<bool> DisJoin(JoinEventDTO join)
@@ -150,6 +172,46 @@ namespace BCMS.Services
                     return true;
                 }
                 return false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<bool> manager(JoinEventDTO join)
+        {
+            try
+            {
+                var check = await this._context.JoinEvent.Where(x => x.PostId.Equals(join.PostId) && x.MemberId.Equals(join.MemberId) && x.BirdId.Equals(join.BirdId)).FirstOrDefaultAsync();
+                if (check != null)
+                {
+                    check.Status ="success";
+                    this._context.Update(check);
+                    await this._context.SaveChangesAsync();
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<List<JoinEvent>> get (string join)
+        {
+            try
+            {
+                var check = await this._context.JoinEvent.Where(x=>x.PostId.Equals(join)).ToListAsync();
+                if(check != null)
+                {
+                    return check;
+                }
+                else
+                {
+                    return null;
+                }
             }
             catch (Exception ex)
             {
