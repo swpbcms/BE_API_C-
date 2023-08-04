@@ -36,6 +36,7 @@ builder.Services.AddScoped<IAdmin, AdminService>();
 builder.Services.AddScoped<IBird, BirdService>();
 builder.Services.AddScoped<IBirdType, BirdTypeService>();
 builder.Services.AddScoped<IBlog, BlogService>();
+builder.Services.AddScoped<IBirdEvent, BirdEventService>();
 
 
 
