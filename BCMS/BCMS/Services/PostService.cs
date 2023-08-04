@@ -123,7 +123,19 @@ namespace BCMS.Services
         {
             try
             {
-                var check = await this._context.Post.Where(x => x.PostId.Equals(id)).FirstOrDefaultAsync();
+                var check = await this._context.Post.Where(x => x.PostId.Equals(id))
+                    .Include(x => x.PostCategory).ThenInclude(x => x.Category)
+                    .Include(x => x.Member)
+                    .Include(x => x.Media)
+                    .Include(x => x.JoinEvent)
+                    .Include(x => x.Like)
+                    .Include(x => x.Comment)
+                        .ThenInclude(u => u.Member)
+                    .Include(x => x.Comment)
+                        .ThenInclude(x => x.InverseReply)
+                        .ThenInclude(u => u.Member)
+                    .Include(x => x.ProcessEvent)
+                    .OrderByDescending(x => x.PostCreateAt).FirstOrDefaultAsync();
                 if (check != null)
                 {
                     return check;
@@ -262,6 +274,31 @@ namespace BCMS.Services
                 return check;
             }
             catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public async Task<Post> admin(string id, bool option)
+        {
+            try
+            {
+                var check = await this._context.Post.Where(x => x.PostId.Equals(id)).FirstOrDefaultAsync();
+                if (check.PostStatus.Contains("Chờ duyệt"))
+                {
+                    if (option)
+                    {
+                        check.PostStatus = "Thành công";
+                    }
+                    else
+                    {
+                        check.PostStatus = "hủy";
+                    }
+                }
+                this._context.Post.Update(check);
+                await this._context.SaveChangesAsync();
+                return check;
+            }
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }

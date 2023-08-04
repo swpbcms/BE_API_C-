@@ -238,5 +238,21 @@ namespace BCMS.Controllers
                 return BadRequest(responseAPI);
             }
         }
+        [Route("admin-post")]
+        [HttpPut]
+        public async Task<IActionResult> admin(string id, bool option)
+        {
+            ResponseAPI<List<Post>> responseAPI = new ResponseAPI<List<Post>>();
+            try
+            {
+                responseAPI.Data = await this.service.admin(id, option);
+                return Ok(responseAPI);
+            }
+            catch (Exception ex)
+            {
+                responseAPI.Message = ex.Message;
+                return BadRequest(responseAPI);
+            }
+        }
     }
 }
