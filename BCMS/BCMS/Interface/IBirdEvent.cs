@@ -11,6 +11,7 @@ namespace BCMS.Interface
         Task<List<BirdEvent>> getAll();
         Task<List<BirdEvent>> getAllBirdEventUser(string memberId);
         Task<List<BirdEvent>> getAllBirdEventPost(string postId);
-
+        Task<List<Bird>> birdjoinev(string post);
+        Task<List<birdscore>> rank(string postId);
     }
 }

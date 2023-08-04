@@ -353,5 +353,24 @@ namespace BCMS.Services
                 throw new Exception(ex.Message);
             }
         }
+
+        public async Task<List<Post>> PostHome()
+        {
+            try
+            {
+                var check = await this._context.Post.OrderByDescending(x => x.PostNumberLike).Include(x=>x.Media).ToListAsync();
+                if (check != null)
+                {
+                    return check;
+                }
+                else
+                {
+                    return null;
+                }
+            }catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

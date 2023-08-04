@@ -18,5 +18,6 @@ namespace BCMS.Interface
         Task<List<Like>> getLikeMember(string id);
         Task<List<JoinEvent>> getJoinMember(string id);
         Task<Post> reStatus(string id);
+        Task<List<Post>> PostHome();
     }
 }

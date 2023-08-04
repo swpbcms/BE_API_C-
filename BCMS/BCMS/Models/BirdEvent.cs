@@ -20,9 +20,8 @@ namespace BCMS.Models
         [Required]
         [StringLength(10)]
         public string Bird2 { get; set; }
-        public int Bird1Score { get; set; }
-        public int Bird2Score { get; set; }
-        [Required]
+        public int? Bird1Score { get; set; }
+        public int? Bird2Score { get; set; }
         [StringLength(10)]
         public string Winner { get; set; }
         [Column(TypeName = "datetime")]
