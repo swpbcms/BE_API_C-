@@ -19,5 +19,6 @@ namespace BCMS.Interface
         Task<List<JoinEvent>> getJoinMember(string id);
         Task<Post> reStatus(string id);
         Task<List<Post>> PostHome();
+        Task<Post> admin(string id, bool option);
     }
 }
