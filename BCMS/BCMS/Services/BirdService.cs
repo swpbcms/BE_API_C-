@@ -124,9 +124,25 @@ namespace BCMS.Services
             }
         }
 
-        public Task<Bird> updateBird(BirdUpdateDTO dto)
+        public async Task<Bird> updateBird(BirdUpdateDTO dto)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var check = await this._context.Bird.Where(x=>x.BirdId== dto.BirdId).FirstOrDefaultAsync();
+                check.Weight = dto.Weight;
+                check.Age = dto.Age;
+                check.BirdTypeId = dto.BirdTypeId;
+                check.BirdName = dto.BirdName;
+                check.Image = dto.Image;
+                check.Size = dto.Size;
+                
+                this._context.Bird.Update(check);
+                await this._context.SaveChangesAsync();
+                return check;
+            }catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

@@ -132,7 +132,7 @@ namespace BCMS.Models
 
             modelBuilder.Entity<JoinEvent>(entity =>
             {
-                entity.HasKey(e => new { e.MemberId, e.PostId });
+                entity.HasKey(e => new { e.MemberId, e.PostId, e.BirdId });
 
                 entity.HasOne(d => d.Bird)
                     .WithMany(p => p.JoinEvent)
@@ -180,7 +180,6 @@ namespace BCMS.Models
                 entity.HasOne(d => d.Post)
                     .WithMany(p => p.Media)
                     .HasForeignKey(d => d.PostId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Media_Post");
             });
 

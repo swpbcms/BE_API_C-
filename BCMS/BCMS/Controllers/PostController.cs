@@ -69,6 +69,23 @@ namespace BCMS.Controllers
             }
         }
 
+        [Route("get-post-home")]
+        [HttpGet]
+        public async Task<IActionResult> gethome()
+        {
+            ResponseAPI<List<Post>> responseAPI = new ResponseAPI<List<Post>>();
+            try
+            {
+                responseAPI.Data = await this.service.PostHome();
+                return Ok(responseAPI);
+            }
+            catch (Exception ex)
+            {
+                responseAPI.Message = ex.Message;
+                return BadRequest(responseAPI);
+            }
+        }
+
         [Route("get-post-id")]
         [HttpGet]
         public async Task<IActionResult> getid(string id)

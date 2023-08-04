@@ -54,7 +54,10 @@ namespace BCMS.Services
         {
             try
             {
-                var check = await this._context.Report.ToListAsync();
+                var check = await this._context.Report
+                    .Include(x=>x.Post)
+                        .ThenInclude(x=>x.Media)
+                    .ToListAsync();
                 return check;
             }catch(Exception ex)
             {
@@ -66,7 +69,10 @@ namespace BCMS.Services
         {
             try
             {
-                var check = await this._context.Report.Where(x=>x.ReportStatus==false).ToListAsync();
+                var check = await this._context.Report.Where(x=>x.ReportStatus==false)
+                    .Include(x => x.Post)
+                        .ThenInclude(x => x.Media)
+                    .ToListAsync();
                 return check;
             }
             catch (Exception ex)
@@ -79,7 +85,10 @@ namespace BCMS.Services
         {
             try
             {
-                var check = await this._context.Report.Where(x => x.MemberId.Equals(id)).ToListAsync();
+                var check = await this._context.Report.Where(x => x.MemberId.Equals(id))
+                    .Include(x => x.Post)
+                        .ThenInclude(x => x.Media)
+                    .ToListAsync();
                 return check;
             }
             catch (Exception ex)

@@ -14,7 +14,6 @@ namespace BCMS.Models
         [Column("MediaID")]
         [StringLength(10)]
         public string MediaId { get; set; }
-        [Required]
         [Column("PostID")]
         [StringLength(10)]
         public string PostId { get; set; }
