@@ -7,6 +7,8 @@ namespace BCMS.Interface
     public interface IManager
     {
         Task<List<Manager>> GetList();
+        Task<List<Member>> GetListmem();
+        Task<Member> Acceptmem(string memid);
         Task<Manager> GetById(string id);
         Task<List<Manager>> GetByName(string name);
         Task<Manager> Register(ManagerCreateDTO newMem);

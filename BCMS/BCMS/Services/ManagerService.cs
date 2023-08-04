@@ -13,6 +13,29 @@ namespace BCMS.Services
         {
             _context = context;
         }
+
+        public async Task<Member> Acceptmem(string memid)
+        {
+            try
+            {
+                var check = await this._context.Member.Where(x=>x.MemberId== memid).FirstOrDefaultAsync();
+                if (check != null)
+                {
+                    check.MemberStatus = "active";
+                    this._context.Member.Update(check);
+                    await this._context.SaveChangesAsync();
+                    return check;
+                }
+                else
+                {
+                    throw new Exception("null");
+                }
+            }catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<Manager> DeleteByID(string id)
         {
             try
@@ -79,6 +102,25 @@ namespace BCMS.Services
                 return null;
             }
             catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<List<Member>> GetListmem()
+        {
+            try
+            {
+                var check = await this._context.Member.Where(x => x.MemberStatus.Equals("pending")).ToListAsync();
+                if (check != null)
+                {
+                    return check;
+                }
+                else
+                {
+                    throw new Exception("null");
+                }
+            }catch(Exception ex)
             {
                 throw new Exception(ex.Message);
             }
