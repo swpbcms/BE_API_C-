@@ -47,7 +47,7 @@ namespace BCMS.Services
                     var med = new Media();
 
                     med.Status = true;
-                    med.PostId = blog.BlogId;
+                    med.BlogId = blog.BlogId;
                     med.LinkMedia = x.LinkMedia;
                     med.MediaId = "MED" + Guid.NewGuid().ToString().Substring(0, 7);
 

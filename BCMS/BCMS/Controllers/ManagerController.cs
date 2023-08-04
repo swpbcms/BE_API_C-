@@ -34,6 +34,22 @@ namespace BCMS.Controllers
                 return BadRequest(responseAPI);
             }
         }
+        [Route("All-mem")]
+        [HttpGet]
+        public async Task<IActionResult> Getmem()
+        {
+            ResponseAPI<List<Member>> responseAPI = new ResponseAPI<List<Member>>();
+            try
+            {
+                responseAPI.Data = await this.service.GetListmem();
+                return Ok(responseAPI);
+            }
+            catch (Exception ex)
+            {
+                responseAPI.Message = ex.Message;
+                return BadRequest(responseAPI);
+            }
+        }
         [Route("Name-Manager")]
         [HttpGet]
         public async Task<IActionResult> GetName(string name)
@@ -76,6 +92,22 @@ namespace BCMS.Controllers
             try
             {
                 responseAPI.Data = await this.service.Login(dto);
+                return Ok(responseAPI);
+            }
+            catch (Exception ex)
+            {
+                responseAPI.Message = ex.Message;
+                return BadRequest(responseAPI);
+            }
+        }
+        [Route("moderate-mem")]
+        [HttpPost]
+        public async Task<IActionResult> mem(string memid)
+        {
+            ResponseAPI<Member> responseAPI = new ResponseAPI<Member>();
+            try
+            {
+                responseAPI.Data = await this.service.Acceptmem(memid);
                 return Ok(responseAPI);
             }
             catch (Exception ex)

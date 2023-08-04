@@ -103,19 +103,6 @@ namespace BCMS.Services
             try
             {
                 var mem = await this._context.Member
-                    .Select(x=> new Member
-                    {
-                        MemberGender = x.MemberGender,
-                        MemberCreateAt= x.MemberCreateAt,
-                        MemberDob= x.MemberDob,
-                        MemberEmail= x.MemberEmail,
-                        MemberFullName= x.MemberFullName,
-                        MemberId= x.MemberId,
-                        MemberImage= x.MemberImage,
-                        MemberStatus= x.MemberStatus,
-                        MemberPassword= x.MemberPassword,
-                        MemberUserName= x.MemberUserName
-                    })
                     .ToListAsync();
                 if(mem != null)
                 {
@@ -156,7 +143,7 @@ namespace BCMS.Services
                 mem.MemberDob = newMem.MemberDob;
                 mem.MemberEmail = newMem.MemberEmail;
                 mem.MemberImage = newMem.MemberImage;
-                mem.MemberStatus = "active";
+                mem.MemberStatus = "pending";
                 mem.MemberId = "Mem"+Guid.NewGuid().ToString().Substring(0,7);
                 mem.MemberFullName= newMem.MemberFullName;
                 
