@@ -99,7 +99,10 @@ namespace BCMS.Services
             try
             {
                 var checkLogin = await this._context.Member.Where(x=>x.MemberUserName.Equals(login.MemberUserName)
-                && x.MemberPassword.Equals(login.MemberPassword) && x.MemberStatus.Equals("active")).FirstOrDefaultAsync();
+                && x.MemberPassword.Equals(login.MemberPassword) && x.MemberStatus.Equals("active"))
+                    .Include(x=>x.Post)
+                        .ThenInclude(x=>x.Media)
+                    .FirstOrDefaultAsync();
                 if (checkLogin == null)
                 {
                     throw new Exception("invalid account");
