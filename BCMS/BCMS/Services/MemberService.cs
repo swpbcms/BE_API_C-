@@ -41,19 +41,8 @@ namespace BCMS.Services
             try
             {
                 var mem = await this._context.Member.Where(x => x.MemberId.Equals(id))
-                    .Select(x => new Member
-                    {
-                        MemberGender = x.MemberGender,
-                        MemberCreateAt = x.MemberCreateAt,
-                        MemberDob = x.MemberDob,
-                        MemberEmail = x.MemberEmail,
-                        MemberFullName = x.MemberFullName,
-                        MemberId = x.MemberId,
-                        MemberImage = x.MemberImage,
-                        MemberStatus = x.MemberStatus,
-                        MemberPassword = x.MemberPassword,
-                        MemberUserName = x.MemberUserName,
-                    })
+                    .Include(x => x.JoinEvent)
+                        .ThenInclude(x => x.Post)
                     .FirstOrDefaultAsync();
                 if (mem != null)
                 {
@@ -72,19 +61,8 @@ namespace BCMS.Services
             try
             {
                 var mem = await this._context.Member.Where(x=>x.MemberFullName.Contains(name))
-                    .Select(x => new Member
-                    {
-                        MemberGender = x.MemberGender,
-                        MemberCreateAt = x.MemberCreateAt,
-                        MemberDob = x.MemberDob,
-                        MemberEmail = x.MemberEmail,
-                        MemberFullName = x.MemberFullName,
-                        MemberId = x.MemberId,
-                        MemberImage = x.MemberImage,
-                        MemberStatus = x.MemberStatus,
-                        MemberPassword = x.MemberPassword,
-                        MemberUserName = x.MemberUserName,
-                    })
+                    .Include(x => x.JoinEvent)
+                        .ThenInclude(x => x.Post)
                     .ToListAsync();
                 if (mem != null)
                 {
@@ -103,6 +81,8 @@ namespace BCMS.Services
             try
             {
                 var mem = await this._context.Member
+                    .Include(x=>x.JoinEvent)
+                        .ThenInclude(x=>x.Post)
                     .ToListAsync();
                 if(mem != null)
                 {
