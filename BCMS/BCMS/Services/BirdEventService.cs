@@ -161,7 +161,7 @@ namespace BCMS.Services
             try
             {
                 var resl = new List<Bird>();
-                var check = await this._context.JoinEvent.Where(x=>x.PostId.Equals(post) && x.Status.Equals("success")).ToListAsync();
+                var check = await this._context.JoinEvent.Where(x=>x.PostId.Equals(post) && x.Status.Equals("tham gia")).ToListAsync();
                 foreach (var x in check)
                 {
                     var b = await this._context.Bird.Where(x => x.BirdId.Equals(x.BirdId)).FirstOrDefaultAsync();
@@ -182,7 +182,7 @@ namespace BCMS.Services
                 var tmp = new birdscore();
                 tmp.totalscore = 0;
                 tmp.rank = 0;
-                var check = await this._context.JoinEvent.Where(x=>x.PostId== postId &&x.Status.Equals("success")).ToListAsync();
+                var check = await this._context.JoinEvent.Where(x=>x.PostId== postId &&x.Status.Equals("tham gia")).ToListAsync();
                 var re = await this._context.BirdEvent.Where(x=>x.PostId == postId).ToListAsync();
 
                 foreach(var x in check)
