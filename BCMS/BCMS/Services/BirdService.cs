@@ -29,6 +29,11 @@ namespace BCMS.Services
                 
                 await this._context.Bird.AddAsync(bird);
                 await this._context.SaveChangesAsync();
+
+                var check = await this._context.Member.Where(x=>x.MemberId== dto.MemberId).FirstOrDefaultAsync();
+                check.NumberOfBird += 1;
+                this._context.Member.Update(check);
+                await this._context.SaveChangesAsync();
                 return bird;
             }catch(Exception ex)
             {
